@@ -12,6 +12,16 @@
 		FA31D5CD2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5CB2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld */; };
 		FA31D5CF2E2C95C5001D8574 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5CE2E2C95C5001D8574 /* ContentView.swift */; };
 		FA31D5D12E2C95C6001D8574 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA31D5D02E2C95C6001D8574 /* Assets.xcassets */; };
+		FA5C627D2E2CA6B500E524BE /* StartAuditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C627C2E2CA6B500E524BE /* StartAuditView.swift */; };
+		FA5C62802E2CA86400E524BE /* AuditHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C627F2E2CA86400E524BE /* AuditHistoryView.swift */; };
+		FA5C62822E2CA88200E524BE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C62812E2CA88200E524BE /* SettingsView.swift */; };
+		FA5C62842E2CA90000E524BE /* AuditDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C62832E2CA90000E524BE /* AuditDataManager.swift */; };
+		FA5C62862E2CA91000E524BE /* AuditGuidelines.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C62852E2CA91000E524BE /* AuditGuidelines.swift */; };
+		FA5C62882E2CA92000E524BE /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C62872E2CA92000E524BE /* Components.swift */; };
+		FA5C628A2E2CA93000E524BE /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C62892E2CA93000E524BE /* Extensions.swift */; };
+		FA5C628F2E2CA96000E524BE /* AuditTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C628E2E2CA96000E524BE /* AuditTypes.swift */; };
+		FA5C628C2E2CA94000E524BE /* FarmSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C628B2E2CA94000E524BE /* FarmSelectionView.swift */; };
+		FA5C628E2E2CA95000E524BE /* AuditSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C628D2E2CA95000E524BE /* AuditSummaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +32,16 @@
 		FA31D5CE2E2C95C5001D8574 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FA31D5D02E2C95C6001D8574 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA31D5D22E2C95C6001D8574 /* LagAuditApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LagAuditApp.entitlements; sourceTree = "<group>"; };
+		FA5C627C2E2CA6B500E524BE /* StartAuditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAuditView.swift; sourceTree = "<group>"; };
+		FA5C627F2E2CA86400E524BE /* AuditHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditHistoryView.swift; sourceTree = "<group>"; };
+		FA5C62812E2CA88200E524BE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		FA5C62832E2CA90000E524BE /* AuditDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditDataManager.swift; sourceTree = "<group>"; };
+		FA5C62852E2CA91000E524BE /* AuditGuidelines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditGuidelines.swift; sourceTree = "<group>"; };
+		FA5C62872E2CA92000E524BE /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
+		FA5C62892E2CA93000E524BE /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		FA5C628E2E2CA96000E524BE /* AuditTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditTypes.swift; sourceTree = "<group>"; };
+		FA5C628B2E2CA94000E524BE /* FarmSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FarmSelectionView.swift; sourceTree = "<group>"; };
+		FA5C628D2E2CA95000E524BE /* AuditSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditSummaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -77,6 +97,7 @@
 		FA31D5DA2E2C9AD3001D8574 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				FA5C62832E2CA90000E524BE /* AuditDataManager.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -85,6 +106,12 @@
 			isa = PBXGroup;
 			children = (
 				FA31D5CE2E2C95C5001D8574 /* ContentView.swift */,
+				FA5C627C2E2CA6B500E524BE /* StartAuditView.swift */,
+				FA5C628B2E2CA94000E524BE /* FarmSelectionView.swift */,
+				FA5C628D2E2CA95000E524BE /* AuditSummaryView.swift */,
+				FA5C627F2E2CA86400E524BE /* AuditHistoryView.swift */,
+				FA5C62812E2CA88200E524BE /* SettingsView.swift */,
+				FA5C62872E2CA92000E524BE /* Components.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -109,6 +136,9 @@
 		FA31D5DE2E2C9AFB001D8574 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FA5C62852E2CA91000E524BE /* AuditGuidelines.swift */,
+				FA5C62892E2CA93000E524BE /* Extensions.swift */,
+				FA5C628E2E2CA96000E524BE /* AuditTypes.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -188,10 +218,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA5C62822E2CA88200E524BE /* SettingsView.swift in Sources */,
 				FA31D5CD2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld in Sources */,
 				FA31D5C82E2C95C5001D8574 /* LagAuditAppApp.swift in Sources */,
 				FA31D5CF2E2C95C5001D8574 /* ContentView.swift in Sources */,
+				FA5C62802E2CA86400E524BE /* AuditHistoryView.swift in Sources */,
 				FA31D5CA2E2C95C5001D8574 /* PersistenceController.swift in Sources */,
+				FA5C627D2E2CA6B500E524BE /* StartAuditView.swift in Sources */,
+				FA5C62842E2CA90000E524BE /* AuditDataManager.swift in Sources */,
+				FA5C62862E2CA91000E524BE /* AuditGuidelines.swift in Sources */,
+				FA5C62882E2CA92000E524BE /* Components.swift in Sources */,
+				FA5C628A2E2CA93000E524BE /* Extensions.swift in Sources */,
+				FA5C628F2E2CA96000E524BE /* AuditTypes.swift in Sources */,
+				FA5C628C2E2CA94000E524BE /* FarmSelectionView.swift in Sources */,
+				FA5C628E2E2CA95000E524BE /* AuditSummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

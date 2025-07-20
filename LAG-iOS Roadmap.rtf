@@ -1,0 +1,855 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 .SFNS-Semibold;\f1\fnil\fcharset0 .SFNS-Regular;\f2\fnil\fcharset0 HelveticaNeue-Bold;
+\f3\fnil\fcharset0 .AppleSystemUIFontMonospaced-Regular;\f4\froman\fcharset0 TimesNewRomanPSMT;\f5\fnil\fcharset0 .SFNS-RegularItalic;
+\f6\fswiss\fcharset0 Helvetica;\f7\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red14\green14\blue14;\red151\green0\blue126;\red0\green0\blue0;
+\red135\green5\blue129;\red20\green0\blue196;\red181\green0\blue19;\red13\green100\blue1;}
+{\*\expandedcolortbl;;\cssrgb\c6700\c6700\c6700;\cssrgb\c66667\c5098\c56863;\csgray\c0;
+\cssrgb\c60784\c13725\c57647;\cssrgb\c10980\c0\c81176;\cssrgb\c76863\c10196\c8627;\cssrgb\c0\c45490\c0;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs44 \cf2 Project Plan Review and Execution Strategy for the Dairy Audit & Teat-Scoring App
+\f1\b0\fs28 \
+\
+
+\f0\b\fs34 Project Overview and Objectives
+\f1\b0\fs28 \
+\
+This project aims to develop a 
+\f2\b mobile application for an internal dairy farm auditing and cow teat-scoring system
+\f1\b0 . It has two major components:\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Audit Module:
+\f1\b0  A digital version of the company\'92s existing \'93Milking System Evaluation\'94 paper form. Technicians will use a mobile app to record milking equipment performance metrics (e.g. vacuum levels, flow rates, pulsator timings, detacher settings). The app will provide instant feedback based on industry guidelines and track herd/farm trends over time, replacing the two-page hand-filled sheet with a structured, cloud-backed workflow.\
+	\'95	
+\f2\b AI/ML Photo Module:
+\f1\b0  An AI-driven system to assess cow teat health via images. Using a camera (e.g. a GoPro or phone) to capture each cow\'92s udder post-milking, the app will automatically evaluate teat-end conditions (color, hyperkeratosis, chapping, etc.) following standard scoring rubrics (such as OMAFRA guidelines). The goal is to generate consistent 
+\f2\b teat condition scores
+\f1\b0  for each cow using computer vision, aiding in early detection of issues like hyperkeratosis or mastitis risk.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2\b \cf2 Target Audience:
+\f1\b0  This app is for internal company use only (proprietary data and users). Technicians and possibly veterinarians within the company will use the app on farms for audits and health assessments.\
+\
+
+\f2\b Development Team & Timeline:
+\f1\b0  A single developer (you) will build the entire system. The target timeline is ambitious but defined as:\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Audit module fully deployed in 
+\f2\b 1\'962 months
+\f1\b0 .\
+	\'95	AI/ML photo module fully developed and integrated in an additional 
+\f2\b 4\'966 months
+\f1\b0  (total ~6\'968 months for the entire project).\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2\b \cf2 Budget Constraints:
+\f1\b0  There is no fixed budget, but costs must remain reasonable and justified. Development labor isn\'92t counted (since you are the developer), but infrastructure and service costs should be minimized. We will leverage cost-effective, usage-based cloud services (preferably serverless and managed services) to avoid unnecessary expenses. No infrastructure cost will be incurred unless there is a clear necessity for it.\
+\
+
+\f2\b Target Platforms & Tech Summary:
+\f1\b0  The app will be a 
+\f2\b mobile application
+\f1\b0 , likely deployed on iOS (and possibly Android if needed) devices used by the company\'92s field staff. We need to choose technologies that a single developer can manage end-to-end:\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Mobile Frontend:
+\f1\b0  A cross-platform approach (e.g. 
+\f2\b React Native
+\f1\b0  with TypeScript, using Expo) is ideal to maximize code reuse for iOS/Android and speed up development. React Native (Expo) was considered in the initial plan and allows rapid development and OTA updates via Expo EAS, which is beneficial for an internal app.\
+	\'95	
+\f2\b Backend:
+\f1\b0  A cloud backend on AWS is planned, to store audit data and possibly perform heavy computations. We will use managed services to reduce maintenance:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b User Authentication:
+\f1\b0  Amazon 
+\f2\b Cognito
+\f1\b0  (via AWS Amplify Auth) for secure login, given the app is internal but still requires controlling access.\
+	\'95	
+\f2\b Data Storage & API:
+\f1\b0  Likely an AWS 
+\f2\b AppSync (GraphQL)
+\f1\b0  API with an underlying database. A GraphQL approach was mentioned to handle structured data and real-time updates (subscriptions) if needed. This can simplify syncing data and offline usage via Amplify DataStore . The data could be stored in a 
+\f2\b DynamoDB
+\f1\b0  (NoSQL) for simplicity or an 
+\f2\b Aurora Serverless v2 (PostgreSQL)
+\f1\b0  database if relational queries are needed. Aurora Serverless can auto-scale and only charge per usage, which helps keep costs reasonable. However, using DynamoDB via AppSync might reduce development effort by leveraging Amplify\'92s generated resolvers.\
+	\'95	
+\f2\b File Storage:
+\f1\b0  Amazon 
+\f2\b S3
+\f1\b0  for storing images (cow udder photos, etc.) and possibly PDF reports or other large files. S3 is inexpensive and reliable for binary data.\
+	\'95	
+\f2\b Serverless Logic:
+\f1\b0  
+\f2\b AWS Lambda
+\f1\b0  (Node.js or Python) behind API Gateway or as AppSync resolvers for any custom business logic (e.g. processing data, invoking ML inference if done in cloud). Using Lambdas avoids running servers 24/7 and incurs cost only on use, aligning with our budget guidelines.\
+	\'95	
+\f2\b ML Model Training/Serving:
+\f1\b0  
+\f2\b Amazon SageMaker
+\f1\b0  (or a similar ML pipeline) to develop and train the computer vision model. SageMaker can be used for initial model development and possibly to host a model endpoint for cloud inference during development. Final deployment of the model will likely be 
+\f2\b on-device
+\f1\b0  for low latency, but SageMaker will expedite training and experimentation.\
+	\'95	
+\f2\b Analytics & Monitoring:
+\f1\b0  For internal analytics on the collected data, we can use 
+\f2\b Amazon QuickSight
+\f1\b0  to create dashboards showing trends (e.g. herd-level teat condition trends, equipment performance over time) for management. For system monitoring (performance, errors), AWS CloudWatch will be used, and if needed, 
+\f2\b Grafana Cloud
+\f1\b0  (or Amazon Managed Grafana) could be integrated to visualize logs/metrics. These services should only be used if they provide clear value \'96 e.g. QuickSight if non-developers need to slice and dice data, Grafana if we need advanced monitoring beyond CloudWatch.\
+\
+The above technology stack is chosen to 
+\f2\b \'93best fill the project\'94
+\f1\b0  requirements given one developer:\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Cross-platform JS (React Native)
+\f1\b0  for efficiency.\
+	\'95	
+\f2\b Managed cloud services
+\f1\b0  (Amplify/AppSync, Cognito, Lambdas, Aurora/Dynamo, S3) to avoid building backend infrastructure from scratch, thus saving time and ensuring scalability and security out-of-the-box.\
+	\'95	
+\f2\b Python-based ML
+\f1\b0  leveraging cloud tools for rapid development.\
+	\'95	This stack ensures we only pay for what we use (serverless pricing) and we can justify each cost (e.g. a database is needed to store audit records, S3 is needed for images, etc.). There are no unnecessary components.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs34 \cf2 Feasibility Assessment & Recommendations
+\f1\b0\fs28 \
+\
+Overall, the project\'92s goals are 
+\f2\b plausible and achievable
+\f1\b0  within the timeframe, but they require careful planning and possibly scoping adjustments. Below is a vetting of each aspect and recommendations to ensure success:\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Timeline Realism:
+\f1\b0  Delivering the Audit module in ~2 months and the AI Photo module in ~4-6 months is ambitious for a single developer, but feasible if scope is well-defined and the developer is proficient with the chosen tools. The Audit module (a digital form with data sync and basic analysis) is relatively straightforward, whereas the AI module (computer vision) is complex and may need the full 4-6 months. It\'92s crucial to prioritize core features first and adopt an 
+\f2\b agile, iterative approach
+\f1\b0 . For example, aim to deploy a 
+\f2\b minimum viable product (MVP)
+\f1\b0  of the audit functionality quickly (within 6-8 weeks), then incrementally add the AI features. This ensures the project delivers tangible value early (digitizing the audit process) while providing more time for the risky ML component.\
+	\'95	
+\f2\b Audit Module Complexity:
+\f1\b0  Converting the existing paper form to a digital format is very doable. The paper form is only two pages, implying a finite set of fields and checklists to implement. The app will guide the user through inputting these fields (possibly via a step-by-step wizard for ease of use, as mentioned in the plan). The main challenges are implementing logic for \'93instant guideline feedback\'94 and \'93trends over time\'94. These are achievable by encoding known standards:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	We can embed rules (thresholds, acceptable ranges from industry guidelines like OMAFRA) into the app so that as soon as a technician enters a value (e.g. vacuum level), the app can flag if it\'92s out of range or suggest corrective actions. This does not require cloud communication and can be done locally for speed.\
+	\'95	For \'93herd-level trends\'94, since the target audience is internal, it might suffice to show simple charts in-app or allow the technician to view past results. Implementing trend charts for, say, the last 5 audits of the same farm or machine can be done by fetching historical data from the database (or from a local cache) and using a chart library. Given connectivity constraints on farms, we should plan to 
+\f2\b cache relevant historical data locally
+\f1\b0  when online, so that some trend information is available on-site even with limited internet.\
+	\'95	
+\f2\b Recommendation:
+\f1\b0  Keep the initial audit module focused on data capture and basic feedback. More advanced analytics (like comprehensive trend analysis or full reporting dashboards) can be offloaded to QuickSight or a later phase. Ensure that the audit app at least records all data in the cloud (for later analysis) and provides immediate validation for technicians.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b AI/ML Module Feasibility:
+\f1\b0  Automating teat-end scoring with ML is an innovative goal. 
+\f2\b Research indicates this is an achievable task
+\f1\b0  \'96 for instance, a 2021 study collected ~398 teat images and successfully trained a deep learning model (GoogLeNet) to classify teat-end hyperkeratosis on a 4-point scale  . Another recent project reported over 82% mean average precision in classifying teat skin conditions using fine-tuned vision models . These results confirm that with a few hundred quality images and transfer learning, the model can reach useful accuracy. Therefore, the goal of a functional teat-scoring AI in 4-6 months is 
+\f2\b plausible
+\f1\b0 , 
+\f2\b provided that
+\f1\b0  we plan for data collection and model training early:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	The biggest dependency is having a labeled dataset of cow udder/teat images representative of the conditions we want to detect. If the company doesn\'92t already have such images, a 
+\f2\b data collection effort
+\f1\b0  must occur in parallel with development. Each farm visit audit can be an opportunity to capture photos. We should start capturing and labeling images as soon as the audit app is in use (if not sooner). This way, by the time we focus on model training, we have sufficient data.\
+	\'95	Labeling images (assigning scores for hyperkeratosis, color, etc.) will require domain expertise (e.g. a vet or dairy specialist). Plan to involve an expert to label the images according to the standard rubric (e.g. the 4-point teat-end hyperkeratosis scale ). The OMAFRA or similar guidelines should be followed for consistency.\
+	\'95	Choosing the right approach: A transfer learning method (fine-tuning a pre-trained CNN like ResNet or EfficientNet) will save time and likely achieve good results with limited data. This aligns with what similar projects have done (re-using preexisting vision models and fine-tuning ).\
+	\'95	We must also consider 
+\f2\b inference deployment
+\f1\b0 . The requirement of ~150ms response and use in barns (with spotty connectivity) implies the model should run 
+\f2\b on-device (edge inference)
+\f1\b0  rather than sending images to the cloud. Modern phones can handle moderately sized CNN models (especially using Core ML on iOS or TensorFlow Lite on Android with GPU acceleration). We\'92ll need to convert the trained model to a mobile-friendly format (CoreML or TFLite) and integrate it into the app. There are React Native libraries (e.g. 
+\f3 react-native-fast-tflite
+\f1 ) that facilitate on-device ML and even support using CoreML on iOS for speed .\
+	\'95	
+\f2\b Recommendation:
+\f1\b0  Use a staged approach for the AI module:\
+\pard\tqr\tx1060\tx1220\li1220\fi-1220\sl324\slmult1\sb240\partightenfactor0
+
+\f4 \cf2 	1.	
+\f2\b Prototype with Cloud ML:
+\f1\b0  Initially (for testing), you might use a SageMaker endpoint or Lambda to run the model on the server, just to validate the concept. This avoids early optimization and ensures the model works. However, keep this as an interim step due to latency.\
+
+\f4 	2.	
+\f2\b Edge Deployment:
+\f1\b0  Plan from the start to move inference on-device. The app can download the model file (maybe from S3) or bundle it, and then use a native module to run it. This will give the immediate (<0.2s) response needed. We\'92ll have to optimize the model size (possibly by pruning or using a smaller architecture) to fit in memory and run quickly on a mobile GPU.\
+
+\f4 	3.	
+\f2\b Feedback Loop:
+\f1\b0  Recognize that the first model version might not be perfect. Plan for iterating on the model \'96 e.g. after deployment, collect more data on cases it misclassifies, then retrain. Because the app is internal, deploying updated models via app updates or even through over-the-air updates (Expo OTA or a remote model fetch) is acceptable. The mention of EAS (Expo Application Services) and OTA updates in the plan indicates we can push updates, including possibly updated ML models, without requiring full re-installs.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Resource & Skill Feasibility:
+\f1\b0  As a single developer, you\'92ll be wearing many hats (mobile dev, backend dev, ML engineer). This is challenging but doable if you leverage high-level frameworks:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Using 
+\f2\b AWS Amplify
+\f1\b0  to handle much of the backend (Auth, GraphQL API, and data synchronization) will save a lot of time. Amplify can automatically generate a GraphQL API and database tables from a schema, handle user sign-up/login flows, and even provide offline synchronization (via DataStore) with conflict resolution . This significantly reduces the need to custom-build and thus is recommended given the tight timeline. It also aligns with the goal of no unnecessary costs: Amplify uses AppSync and DynamoDB under the hood which are pay-per-use and managed.\
+	\'95	For the mobile app, using 
+\f2\b Expo
+\f1\b0  can speed up development (quick testing on devices, easy deployment). However, one caveat: integrating a native ML library (like TFLite) might require adding custom native modules or using the \'93bare workflow\'94 instead of pure managed Expo. This is manageable with Expo\'92s EAS Build (we can include config plugins for 
+\f3 react-native-fast-tflite
+\f1  for example) . It\'92s a small increase in complexity, but feasible. Alternatively, if Expo proves limiting for ML integration, be ready to eject to a bare React Native app when the time comes to integrate the model.\
+	\'95	
+\f2\b Learning Curve:
+\f1\b0  If any of these technologies are new to you (Amplify, SageMaker, etc.), allocate time for learning and prototyping. The roadmap should include a short \'93Phase 0\'94 for environment setup and tech trials. For example, spend a week setting up a simple Amplify project and a \'93Hello World\'94 ML inference to ensure you know the pieces.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Scope Management:
+\f1\b0  Ensure the project goals remain focused:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	The 
+\f2\b Audit module
+\f1\b0  should focus on replicating the paper form functionality and basic analytics. Avoid scope creep like adding totally new features unrelated to the current manual process (at least for v1). You can add niceties like generating a PDF report of an audit or advanced visualizations later if time permits. For now, an audit record saved to the cloud and a simple summary screen is sufficient.\
+	\'95	The 
+\f2\b AI module
+\f1\b0  core goal is teat scoring. Other potential computer-vision ideas (e.g. detecting if milkers are cleaned properly, etc., which one might consider in dairy automation ) should be out-of-scope for this project to meet the timeline. Stick to the teat condition classification problem.\
+	\'95	Integration between modules: Determine if the teat-scoring is part of each audit workflow or a separate activity. If it\'92s part of an audit, then the audit process will have a step \'93Capture cow teat images and get scores.\'94 If separate, they might use the app in one mode for equipment audit and another for a periodic herd teat evaluation. Clarify this early, as it affects UI design. Given the plan separation, it might be that the teat scoring is a distinct module used perhaps after milking while doing herd health checks, not every time an equipment audit is done. Clarify with stakeholders and design the navigation accordingly (e.g. two main sections in the app: Equipment Audit and Teat Scan).\
+	\'95	
+\f2\b CRM Integration:
+\f1\b0  The scope hints that some metadata (farm info, etc.) could be fetched from a CRM. If your company has an existing CRM or database of clients/farms, plan an integration (maybe a simple REST API call) to pre-fill farm details when starting a new audit. This will save technician time and improve accuracy. Ensure you have access to such an API or database. If not readily available, this can be a manual entry in MVP and integrated later.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Cost Considerations:
+\f1\b0  The plan as outlined uses mostly serverless and managed services, which is cost-efficient for low/medium usage:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Cognito
+\f1\b0  has a minimal cost for small numbers of users (often free for first 50k MAUs).\
+	\'95	
+\f2\b AppSync/DynamoDB
+\f1\b0  or 
+\f2\b Lambda/Aurora
+\f1\b0  will cost only for the data stored and the requests made. For an internal app, usage is low, so monthly costs should be small (likely in the tens of dollars range at most).\
+	\'95	
+\f2\b S3
+\f1\b0  for image storage is very cheap (e.g. storing 1,000 images of ~5MB each is about 5 GB, costing only ~$0.12/month). Data transfer is negligible if used internally.\
+	\'95	
+\f2\b SageMaker
+\f1\b0  can incur costs during training. To minimize this, use SageMaker\'92s offline experiments (e.g. SageMaker Studio or a notebook instance that can be turned off when not in use, or train locally on a powerful laptop if available). Once the model is trained, we likely won\'92t host an always-on endpoint (since inference will be on-device), which avoids ongoing SageMaker costs. If we do use a temporary endpoint for testing, we can take it down when not needed.\
+	\'95	
+\f2\b QuickSight
+\f1\b0  has a $0-$24/month per user cost (for standard or enterprise edition). If only one or two internal analysts use it, this is reasonable and only if needed for the business. Alternatively, since the audience is internal, some simple web UI or even Excel exports could be used for trend analysis to avoid costs. However, QuickSight is convenient for a polished solution and is justified if management needs self-serve analytics.\
+	\'95	
+\f2\b Grafana Cloud
+\f1\b0  has a free tier for basic usage which might suffice for our monitoring. Alternatively, Amazon CloudWatch dashboards can be used (small costs for custom metrics). Given the scale, a full Grafana may not be necessary initially, but if the developer prefers a single pane for logs/metrics, a lightweight Grafana (even self-hosted on a small EC2 or using the free tier) can be introduced. Just ensure there\'92s a clear need (e.g. need to track latency of on-device vs cloud inference, etc. \'96 though on-device metrics won\'92t be automatically collected in Grafana).\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2\b \cf2 Key Recommendations to Adjust/Emphasize:
+\f1\b0 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Leverage Amplify DataStore for Offline
+\f1\b0 : Because technicians will work on-site (possibly with poor internet in barns), offline-first capability is important. Amplify DataStore will automatically sync data when online and let the app function offline seamlessly . This prevents data loss and allows continuous use. If using AppSync, enable DataStore/offline sync in the client; if using a custom solution, implement a local SQLite cache and a sync queue (more development effort). Given time constraints, Amplify\'92s built-in offline support is highly valuable and justified.\
+	\'95	
+\f2\b Gradual Rollout of AI
+\f1\b0 : Don\'92t hold back the entire app waiting for a perfect ML model. Deploy the audit module as 
+\f2\b Phase 1
+\f1\b0  so the team can start using it (and perhaps manually noting teat conditions in the interim). Then, in 
+\f2\b Phase 2
+\f1\b0 , add the photo capture functionality \'96 even if initially the app just uploads photos to the cloud without an immediate AI result. This way, you gather the data needed for training. Finally, 
+\f2\b Phase 3
+\f1\b0 , deploy the on-device inference when the model is ready. This phased approach ensures each part of the project is delivered in a usable form and mitigates risk by collecting real data early.\
+	\'95	
+\f2\b Test Early, Test Often
+\f1\b0 : Since only one developer is involved, it\'92s easy to overlook issues. Engage end-users (technicians) early by letting them beta test the audit module. Their feedback on UI/UX and the guideline feedback logic will be invaluable (and easier to incorporate in early stages than later). Similarly, once a prototype of the AI model is ready, test it on real new images to see if it generalizes. Internal field testing might reveal edge cases (e.g. poor lighting in barns affecting photos, or the need for a specific camera angle) that can be addressed while there\'92s time.\
+	\'95	
+\f2\b Security and Privacy
+\f1\b0 : Even though the app is internal, it handles potentially sensitive data (farm performance data, etc.). Cognito will secure logins, but also ensure the backend API is locked down to authenticated users only. Use proper authentication in API calls (Amplify can attach JWT tokens to AppSync requests, etc.). For images of cows, privacy is less of an issue (not personal data), but still ensure S3 buckets are private and access-controlled (only allow through the app\'92s credentials). This is standard practice and not difficult with Amplify (it can configure S3 storage with the right policies automatically).\
+\
+By following these recommendations, the project remains 
+\f2\b feasible
+\f1\b0  within the given timeline and budget. We\'92ve aligned technology choices with the one-developer constraint and ensured that each goal is grounded in evidence (either existing research or established services capabilities). Next, we\'92ll outline a concrete execution plan, breaking down the work into phases and milestones to achieve a successful deployment.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs34 \cf2 Execution Plan and Timeline
+\f1\b0\fs28 \
+\
+Below is a 
+\f2\b step-by-step execution plan
+\f1\b0  covering the entire project from start to finish. The plan is organized into phases with an indicative timeline. Given the timelines (1-2 months for Audit, 4-6 months for AI module), we\'92ll assume roughly an 8-month schedule in total. Each phase includes specific tasks and deliverables:\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Phase 0: Setup and Planning (Week 1)
+\f1\b0\fs28 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Development Environment Setup:
+\f1\b0  Set up all required tools and accounts:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Install/upgrade 
+\f2\b React Native & Expo CLI
+\f1\b0 , and set up a sample Expo project for initial testing.\
+	\'95	Set up an 
+\f2\b AWS account
+\f1\b0  (if not already) and configure Amplify CLI with your account credentials.\
+	\'95	Ensure access to any internal resources (e.g. CRM API, if needed).\
+	\'95	Set up a source code repository (Git) to manage the project code.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Project Planning:
+\f1\b0  Finalize requirements and design:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Revisit the paper 
+\f2\b Milking System Evaluation form
+\f1\b0  and break down each section into data fields and input types in the app. Make a list or simple wireframe of the screens needed for the Audit module.\
+	\'95	Confirm with stakeholders the 
+\f2\b scoring rubrics
+\f1\b0  for teat condition (ensure you have the official guidelines that the AI should follow for labeling).\
+	\'95	Decide on the 
+\f2\b data model
+\f1\b0  for the audit records (e.g. what tables or data structure is needed to represent an audit entry, sub-measurements, etc.). Also model the teat scoring data (each cow might have a score and possibly link to an image).\
+	\'95	Choose the database approach: likely use Amplify DataStore with GraphQL. Draft a 
+\f2\b GraphQL schema
+\f1\b0  that includes types like 
+\f3 Farm
+\f1 , 
+\f3 Audit
+\f1 , 
+\f3 AuditEntry
+\f1  (for individual measurements), 
+\f3 TeatScore
+\f1  etc. This schema will be refined but it\'92s good to start outlining (this can be done in a simple text file or using Amplify\'92s schema.graphql).\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Technology Spike (Prototyping):
+\f1\b0  Spend a short time prototyping critical pieces to de-risk them:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Create a small 
+\f2\b Amplify project
+\f1\b0 : run 
+\f3 amplify init
+\f1  and 
+\f3 amplify add auth
+\f1  (to add Cognito) and perhaps 
+\f3 amplify add api
+\f1  (GraphQL) with a simple schema (e.g. a dummy \'93Note\'94 model). Then run 
+\f3 amplify push
+\f1  to ensure you can successfully deploy cloud resources. This verifies your AWS setup and familiarizes you with the workflow.\
+	\'95	Do a quick test of 
+\f2\b camera usage
+\f1\b0  in Expo. For example, use Expo\'92s Camera API in a test screen to capture a photo and display it. Also test saving a file to local storage or uploading to a test S3 bucket (Expo can upload via fetch PUT, etc., or use Amplify Storage if configured). This ensures the device integration (camera, file transfer) is understood.\
+	\'95	If possible, prototype a minimal 
+\f2\b TFLite inference
+\f1\b0  on device: e.g. use a very small sample model with 
+\f3 react-native-fast-tflite
+\f1  to ensure you can integrate native modules in Expo via config plugins. If this is too early, at least research how to do it so you\'92re confident when the time comes (perhaps read the medium article on Expo + CoreML ).\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f5\i \cf2 Deliverables at end of Phase 0:
+\f1\i0  Development environment ready; confirmed tech stack choices; initial schema and app outline; Amplify/Cognito set up with a basic test; clarity on approach for camera and ML integration.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Phase 1: Core Audit Module Development (Weeks 2\'968)
+\f1\b0\fs28 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2\b \cf2 Goal:
+\f1\b0  By the end of Week 8 (~2 months), have a functional Audit module that technicians can use to input milking system test data, with cloud sync, basic feedback, and the ability to view past records.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Week 2-3: Design & Frontend Development
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Design the UI for the Audit workflow:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Implement a 
+\f2\b \'93New Audit\'94 wizard
+\f1\b0  screen. This could involve multiple steps: e.g. Step 1 \'96 Select/enter farm information (possibly pull from CRM or input location, farm name, date), Step 2 \'96 Input general milking system parameters, Step 3 \'96 Input detailed measurements (this might be a repeatable form for each unit or each test performed), etc.\
+	\'95	If the paper form has sections, mirror those sections in the UI as collapsible panels or sequential steps. Keep the UI intuitive and optimized for use in a barn (e.g. large text, possibly a dark mode for low light barns, etc.).\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Start coding the screens in 
+\f2\b React Native
+\f1\b0 :\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Set up a navigation structure (maybe using React Navigation) for the app, including a home screen (list of audits or main menu) and a screen for the new audit form.\
+	\'95	Build form components for various input types (text inputs for numeric values, sliders or pickers if appropriate for ranges, toggle switches for boolean checks, etc.). Ensure validation rules (like numeric ranges) are in place for each field as per guidelines.\
+	\'95	Implement local state management for the form (using React context or a state management library if needed) to handle multi-step inputs and summary before submission.\
+	\'95	
+\f2\b Guideline Feedback:
+\f1\b0  Implement immediate feedback in the UI. For example, after entering a value, show a colored indicator or message (\'93OK\'94 if within range, \'93High\'94 or \'93Low\'94 if outside spec). These rules can be hardcoded from known standards. E.g., if normal claw vacuum is 12.5\'9615\'94 Hg, and the tech enters 16, highlight it in red and maybe suggest \'93Check regulator\'94. (The exact guidelines can be pulled from documentation).\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Ensure the app can work 
+\f2\b offline
+\f1\b0  in this phase (at least at the UI level). Use local state and storage so that an audit can be completed without network. Actual sync will come later when integrating Amplify.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Week 4-5: Backend Integration (Data and Cloud Sync)
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Define the 
+\f2\b GraphQL schema
+\f1\b0  for AppSync based on the finalized data model:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	For example:
+\f6\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f7\fs28 \cf3 type\cf4  Audit \cf5 @model\cf4  \cf5 @auth\cf4 (\cf6 rules\cf4 : [\{ \cf6 allow\cf4 : owner \}]) \{\
+  \cf6 id\cf4 : ID!\
+  \cf6 farmId\cf4 : ID!\
+  \cf6 farmName\cf4 : String\
+  \cf6 date\cf4 : AWSDate!\
+  \cf6 technician\cf4 : String\
+  \cf6 vacuumLevel\cf4 : Float\
+  \cf6 flowRate\cf4 : Float\
+  ... (other summary fields or relationships)\
+  \cf6 entries\cf4 : [AuditEntry] \cf5 @hasMany\cf4 (\cf6 indexName\cf4 : \cf7 "byAudit"\cf4 , \cf6 fields\cf4 : [\cf7 "id"\cf4 ])\
+\}\
+\cf3 type\cf4  AuditEntry \cf5 @model\cf4  \cf5 @auth\cf4 (\cf6 rules\cf4 : [\{ \cf6 allow\cf4 : owner \}]) \{\
+  \cf6 id\cf4 : ID!\
+  \cf6 auditID\cf4 : ID! \cf5 @index\cf4 (\cf6 name\cf4 : \cf7 "byAudit"\cf4 )\
+  \cf6 parameter\cf4 : String!\
+  \cf6 value\cf4 : Float!\
+  \cf6 unit\cf4 : String\
+  \cf6 status\cf4 : String  \cf8 # e.g. OK/High/Low\cf4 \
+\}
+\f6\fs24 \cf0 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f1\fs28 \cf2 And similar for any other relevant data structures. The 
+\f3 @model
+\f1  directive will let Amplify create DynamoDB tables, and 
+\f3 @auth(owner)
+\f1  ensures only the user who created it (or invited) can access, which is fine for internal use (or we can allow all authenticated if all internal users should see everything).\
+\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Use 
+\f2\b Amplify CLI
+\f1\b0  to add the API: 
+\f3 amplify add api
+\f1  (GraphQL) and provide the schema. Enable conflict resolution/offline sync if prompted (DataStore). Then 
+\f3 amplify push
+\f1  to deploy. This will generate code (in 
+\f3 /src/models
+\f1  if using Amplify DataStore) for the data models.\
+	\'95	Integrate Amplify in the React Native app:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Install Amplify libraries (
+\f3 aws-amplify
+\f1  and 
+\f3 aws-amplify-react-native
+\f1  or Amplify\'92s DataStore package). Configure Amplify with the 
+\f3 aws-exports.js
+\f1  file from the push.\
+	\'95	Implement the 
+\f2\b data flow
+\f1\b0 : When the user completes the audit form, save the data via Amplify. With DataStore, this might be as simple as 
+\f3 DataStore.save(new Audit(\{...\}))
+\f1  and the entries. Or using API (GraphQL mutate) if not using DataStore. DataStore will handle offline caching and later syncing automatically .\
+	\'95	Enable 
+\f2\b offline capabilities
+\f1\b0 : Test that creating an audit while offline still stores locally and then syncs when network is restored (DataStore does this by default; if using API manually, you may need to queue requests).\
+	\'95	Implement a screen to 
+\f2\b view past audits
+\f1\b0  (or at least list them): Query the stored audits (DataStore.query or API query) and display a list (with basic info like date, farm). This addresses the \'93trends over time\'94 partially by at least giving access to historical data on the device. For now, a simple list and detail view of an audit is enough.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Security & Auth:
+\f1\b0  Implement login flow using Amplify Auth UI or a custom login screen:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Since it\'92s internal, you might pre-create user accounts in Cognito. If using Amplify\'92s pre-built UI is possible in RN, or create a simple email/password login screen that calls 
+\f3 Auth.signIn()
+\f1  from AWS Amplify.\
+	\'95	Test sign-up/in (if techs will self-register or an admin will create accounts).\
+	\'95	Ensure that after login, the user\'92s identity is used in DataStore so that the @owner rules attach the user ID to data (Amplify does this automatically).\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Testing:
+\f1\b0  By end of week 5, test end-to-end:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Create an audit on the app, ensure it appears in DynamoDB/AppSync backend.\
+	\'95	Test offline creation: turn off internet, fill a form, then turn on internet and see if it syncs.\
+	\'95	Check that guideline feedback works as expected with various inputs.\
+	\'95	Get a colleague or potential user to try the flow and give feedback on usability.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+\cf2 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Week 6-7: Refinement and Feature Completion
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Incorporate feedback from testing:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Improve UI/UX (e.g. make certain fields required, add progress indicators during sync, refine any confusing labels).\
+	\'95	If any major bugs in sync or data model, fix them now.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Add any 
+\f2\b nice-to-have features
+\f1\b0  for the audit module:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Possibly a PDF or summary report generator: e.g., after completing an audit, allow the technician to \'93export\'94 the results. This could be generating a PDF (using a library or sending data to a Lambda to create PDF) that can be emailed. This is optional and only if time permits, but it might be useful internally for record-keeping.\
+	\'95	Implement the basic 
+\f2\b trend chart
+\f1\b0  if feasible: For example, on the farm detail page, show a simple line chart of a key parameter (like average vacuum level) over the last X audits. This can be done with a RN chart library and the historical data. If this is complex, defer to QuickSight, but a tiny visualization might enhance user value.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Optimize performance for low-end devices if needed (though RN on modern phones should be fine for a simple form). Ensure the app stays responsive, and perhaps limit how much data is pulled for listing audits (paginate if many records).\
+	\'95	
+\f2\b Prepare Deployment:
+\f1\b0  Because the target is internal, decide deployment strategy:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	For iOS, if the company has an Apple Enterprise account, you can distribute internally. Otherwise, TestFlight might be used for a smaller group of trusted users (up to 10000, which is plenty).\
+	\'95	For Android (if needed), you can distribute an APK or use the Play Store\'92s internal testing track.\
+	\'95	At end of Phase 1, plan to distribute the app to a few internal users (beta test group).\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Week 8: Phase 1 Release
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Conduct final testing of the Audit module. Ensure all critical bugs are resolved.\
+	\'95	
+\f2\b Deploy the Audit module
+\f1\b0 : Build the app (using EAS or Xcode/Android Studio for a release version) and distribute it to the internal team.\
+	\'95	Provide a short user guide or training session to the technicians if needed, focusing on how to use the new digital form and highlighting the immediate feedback feature.\
+	\'95	Monitor initial usage closely. Use CloudWatch or Amplify Analytics to catch any runtime errors. Collect user feedback for improvements (can schedule a review meeting after a couple of weeks of use).\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f5\i \cf2 Milestone:
+\f1\i0  
+\f2\b Audit Module Live (end of Month 2).
+\f1\b0  The company is now using the app for milking system audits digitally. This alone is a big value-add, replacing paper forms with a cloud database and quick feedback.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Phase 2: AI/ML Data Preparation and Prototype (Month 3\'964)
+\f1\b0\fs28 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2\b \cf2 Goal:
+\f1\b0  Lay the groundwork for the AI module by collecting and labeling image data, and develop a prototype model for teat condition scoring.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Month 3: Integrate Photo Capture Workflow
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Camera/GoPro Integration:
+\f1\b0  Add features in the app to capture cow teat images:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Determine the workflow: For example, after completing an audit or as a separate function, allow the user to enter a \'93Photo Capture\'94 mode. In this mode, for each cow (or stall), the user can capture an image of the udder.\
+	\'95	If using the 
+\f2\b phone\'92s camera
+\f1\b0 , implement a camera screen with a shutter button. Possibly include an overlay or guide to help frame the udder correctly (consistent framing improves model accuracy).\
+	\'95	If planning to use a 
+\f2\b GoPro or external camera
+\f1\b0 , research GoPro\'92s interface:\
+\pard\tqr\tx1300\tx1460\li1460\fi-1460\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	GoPro cameras (Hero models) often support a Wi-Fi API for remote control and streaming. For instance, the camera can act as a Wi-Fi hotspot; the app can connect to it and trigger photos or retrieve video stream. Implementation may require making HTTP requests to the camera\'92s IP (which Expo can do). You might need to consult GoPro developer docs. Given time, a simpler approach is to use the phone camera first (less complexity), and note that support for GoPro can be added later via firmware integration.\
+	\'95	
+\f2\b Recommendation:
+\f1\b0  Start with phone camera support (to not block development). Ensure the app architecture allows swapping the image source later (phone or external).\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	After capturing a photo, show a preview and allow the tech to retake if quality is poor. Then save the photo.\
+	\'95	
+\f2\b Storage of photos:
+\f1\b0  Since photos might be large, do not keep too many in app memory. After capture, directly upload to S3 (using Amplify Storage or a pre-signed URL) if network is available. Also, store a reference in the database (e.g. a TeatScore record with fields: cow ID or index, photo S3 key, and placeholder for score).\
+	\'95	If offline, you may need to store the image in a local file and queue the upload for later. This can get complex; if connectivity is usually present in the milking parlor (maybe Wi-Fi can be arranged), it simplifies things. Alternatively, restrict the AI feature to online mode in MVP (though on-device inference doesn\'92t need internet, uploading images to cloud for record-keeping might).\
+	\'95	Tie the photo capture into data model: e.g. if an audit covers a milking session, you might link each photo to that session and cow ID. Or if separate, have a \'93HerdTeatScan\'94 session containing multiple TeatScore entries. Update the GraphQL schema accordingly (add a 
+\f3 TeatScore @model
+\f1  type with fields for image key, score, etc., linked to farm or session).\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Begin Data Collection:
+\f1\b0  As technicians use the photo capture feature, they will generate images. In this phase, the app might not give any AI result yet \'96 it\'92s primarily collecting data. It would be wise to have the technicians 
+\f2\b manually record scores
+\f1\b0  as well for these photos (if they are trained to do so):\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	For instance, after capturing a photo, the app could prompt the user to input their visual assessment (e.g. select a score 1-4 for teat-end condition). This manual label can be saved with the photo. This yields a labeled dataset progressively (and also provides immediate value if they trust their own assessment).\
+	\'95	If technicians are not trained for that, then just collect the photos and plan to label later by an expert or yourself.\
+	\'95	Ensure proper 
+\f2\b metadata
+\f1\b0  with each image: e.g. date, cow (if identifiable or at least which farm/batch), and who labeled it (if labeled). This helps in model training and evaluating performance per farm, etc.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Labeling Process:
+\f1\b0  Set up a process for labeling the images:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	You can use an 
+\f2\b Excel or CSV
+\f1\b0  to keep track of image file names and their scores.\
+	\'95	Alternatively, use Amazon SageMaker Ground Truth or a simpler tool (there are open-source image annotation tools) to systematically label images.\
+	\'95	Given budget concerns, a manual approach by yourself or colleagues might be simplest if volume is not huge. Aim to gather a few hundred images at least (as research suggests ~400 images yielded a workable model ).\
+	\'95	
+\f2\b Parallelize collection and labeling
+\f1\b0 : as images come in from field use, have someone label them weekly.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Review Data Quality:
+\f1\b0  By end of month 3, review the images collected. Check for:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Consistency (are all images clear, showing the teat ends? If some are unusable due to angle/lighting, note that and adjust instructions to techs to improve consistency).\
+	\'95	Class balance (do we have a variety of conditions? e.g. many \'93normal\'94 and a few \'93very rough\'94? If the data is skewed, you may later need data augmentation or targeted collection to balance).\
+	\'95	If data quantity is insufficient, consider scheduling extra photo collection (maybe a dedicated session to photograph many cows) to boost the dataset.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Month 4: Model Development (Initial Version)
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Set up ML Environment:
+\f1\b0  Prepare a development environment for training the model:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Use 
+\f2\b SageMaker Studio or a Notebook
+\f1\b0 : This provides a Jupyter environment in the cloud with easy access to S3. Upload the collected and labeled dataset (images + labels) to an S3 bucket or directly to the notebook.\
+	\'95	Alternatively, if using local GPU resources, you can download images from S3 and train locally using PyTorch or TensorFlow. But SageMaker is recommended for scalability and if a GPU instance is needed for faster training.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Explore the Data:
+\f1\b0  Write a notebook to load the images and visualize some examples with their labels. This helps verify that labels are correct and consistent with what the model should learn.\
+	\'95	
+\f2\b Choose Model Architecture:
+\f1\b0  Based on research and your familiarity, select a pre-trained model to fine-tune:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	A good starting point is a ResNet50 or EfficientNet model pre-trained on ImageNet, as they likely did in the references. For example, use PyTorch or TensorFlow Hub to get a model.\
+	\'95	Because we might also need to localize teats if images contain more than the teat (udder, background), one could consider first detecting/zooming into teat end region. However, to keep scope contained, if the images are consistently framed (teat ends visible close-up), a classification model on the whole image might suffice.\
+	\'95	Define the classification categories (likely 4 classes: Normal, Smooth ring, Rough ring, Very rough) if following the 4-point scale . Ensure your labels match those categories.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Training
+\f1\b0 : Fine-tune the model on the dataset:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Split data into train/val/test sets (e.g. 70/15/15). Use techniques like data augmentation (flip, rotate, adjust brightness) to bolster training due to limited data.\
+	\'95	Train using transfer learning: freeze some base layers or use a modest learning rate for pre-trained layers and slightly higher for final layers. Monitor validation accuracy or AUC.\
+	\'95	It\'92s possible with a small dataset that performance plateaus early; that\'92s fine. Aim for a model that can at least distinguish extreme cases (normal vs very rough) with high confidence. The research example had AUC 0.92 for very rough , which is promising.\
+	\'95	If certain classes are hard to distinguish (the Porter et al. study had trouble with \'93smooth\'94 vs \'93normal\'94 for instance ), note that as a limitation. You can choose to consolidate classes if needed (e.g. maybe it\'92s enough to flag \'93problematic\'94 vs \'93normal\'94 rather than four exact classes, depending on business need).\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Evaluate Model:
+\f1\b0  After training, evaluate on test set:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Calculate accuracy, precision/recall for each class. Ensure it meets a minimally acceptable threshold. If not, identify issues:\
+\pard\tqr\tx1300\tx1460\li1460\fi-1460\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Not enough data? (If so, plan to gather more in Phase 3)\
+	\'95	Overfitting? (Use regularization or augmentation).\
+	\'95	Particular misclassifications? (Maybe the model confuses certain patterns \'96 you might then add some logic or plan a second model stage if needed, but avoid overly complex solutions given time).\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	If results are very poor, consider assistance: perhaps consult with an ML colleague or try a different model architecture (e.g. EfficientNet might do better on small data). But in most cases with transfer learning, you should get a workable model.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Prototype Inference:
+\f1\b0  Once you have a trained model, test it with a few real new images (perhaps ones not in the training set, maybe newly collected from field after training). See if predictions make sense to a human expert. If not, adjust as needed or at least be aware of the model\'92s shortcomings to communicate them.\
+	\'95	
+\f2\b Save Model in Mobile Format:
+\f1\b0  Convert the model to a mobile-friendly format:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	For iOS, use CoreML conversion (Apple\'92s coremltools can convert a PyTorch/TensorFlow model to .mlmodel). For Android/cross-platform, use TensorFlow Lite to convert to a .tflite file. Because React Native can use either (with appropriate libraries), you might do both: a CoreML for iOS (faster on iPhones) and TFLite for Android.\
+	\'95	Ensure the model file size is not huge. Ideally <10-20MB is fine. If it\'92s bigger, consider using a smaller base network or reducing precision (float16 quantization or even int8 quantization if accuracy allows).\
+	\'95	Upload the model file to a secure location (could be bundled with app or downloaded from S3). Initially, just keep it handy; integration comes next phase.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f5\i \cf2 Milestone:
+\f1\i0  
+\f2\b Initial ML Model Ready (end of Month 4).
+\f1\b0  You have a prototype teat scoring model and a collection of labeled images. Even if it\'92s not perfect, you are ready to integrate it into the app.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Phase 3: AI Feature Integration and Refinement (Month 5\'966)
+\f1\b0\fs28 \
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f2\b \cf2 Goal:
+\f1\b0  Integrate the trained ML model into the mobile app, enabling on-device teat condition inference, and refine the system for deployment.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Month 5: Mobile Inference Integration
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Integrate Model into App:
+\f1\b0 \
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Add the 
+\f2\b ML inference capability
+\f1\b0  to the app. Using a library like 
+\f3 react-native-fast-tflite
+\f1  (which supports both iOS CoreML and Android TFLite delegates) is a good approach . If DataStore is used, this might require switching to the bare workflow or adding config plugins \'96 proceed with that configuration and rebuild the app.\
+	\'95	Include the model files: For iOS, include the .mlmodelc in Xcode project (via EAS config). For Android, include the .tflite in assets. Alternatively, have the app 
+\f2\b download the model
+\f1\b0  from S3 on first launch of the feature (this allows updating the model without app update). If doing so, implement a check-sum or versioning to know when to re-download. This adds complexity, so for initial release, bundling with app is simpler.\
+	\'95	Implement a function to preprocess the camera image to the model\'92s input size/format and run the inference. The library will give an array of probabilities or a result.\
+	\'95	Map the model output to a user-friendly result: e.g. class index 0 -> \'93Normal teat ends\'94, 1 -> \'93Slight roughness\'94, etc. Color-code or tag the result as needed (perhaps green/yellow/red for severity).\
+	\'95	
+\f2\b Real-time vs Batch:
+\f1\b0  Decide if inference happens 
+\f2\b live
+\f1\b0  (e.g. as camera is pointing, like an AR experience) or after capture. Likely simpler is after the user takes a photo, then run inference on that static image and display the result on a result screen. This will easily meet the <150ms requirement because one image inference can be done quickly on device. Real-time streaming inference (like analyzing video frames continuously) is not necessary and would be more demanding \'96 not needed here.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b User Interface for Results:
+\f1\b0  Design a UI to display the AI result:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	After a photo is taken (or selected), show the image with an overlay of the result. For example: \'93Predicted Teat Condition: Rough (score 3 out of 4)\'94 along with maybe a short explanation or confidence level.\
+	\'95	Possibly allow the user to provide feedback \'96 e.g. if they disagree with the AI, they could override or tag it (this feedback could be logged for future model improvements). This is optional but could help continually improve the model.\
+	\'95	Ensure the flow is smooth: tech takes picture -> sees result immediately -> can save that result (which should also be saved to backend under that cow\'92s record).\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Connect Results to Data Model:
+\f1\b0  When an AI result is obtained, update the cloud data:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	E.g. update the corresponding 
+\f3 TeatScore
+\f1  record with the predicted score. This ensures that all data (images and results) are stored centrally.\
+	\'95	If using DataStore, the update will sync when online. If the device is offline, queue it \'96 but since inference is on-device, internet is only needed to sync the result later.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Testing the Integration:
+\f1\b0 \
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Try the full flow on device with a variety of test images (some from training set, some new). Verify the latency is indeed very low (measure if needed \'96 likely <0.1s for a moderate CNN on modern phones).\
+	\'95	Check that the app doesn\'92t crash and memory usage is acceptable (loading a model might use 50-100MB RAM, which should be okay on most devices, but just watch for any issues).\
+	\'95	Test on both platform targets (iOS and Android) if supporting both. Sometimes model integration can have platform-specific quirks.\
+	\'95	If possible, have a domain expert evaluate the AI output on a sample of images to confirm it\'92s making reasonable judgments. If the AI is obviously wrong in some cases, consider if you need a quick retraining with more data or if it\'92s acceptable for a first version with disclaimer that it\'92s \'93Beta\'94.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Month 6: System Testing, Optimization, and Deployment of AI Module
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Field Pilot of AI:
+\f1\b0  Do a controlled test with the AI feature in the actual environment:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Have a technician use the app\'92s teat-scoring feature on a number of cows and observe the workflow. Gather feedback: e.g. is the camera easy to use in the barn? Is the result understandable? Do they trust it or is explanation needed? Are there any steps that slow them down?\
+	\'95	Check for practical issues like: phone getting dirty, gloves usage (maybe ensure the UI buttons are big enough if they use gloves), etc. If using GoPro integration, test it thoroughly now (connect to GoPro, capture via app, etc.) and ensure it doesn\'92t introduce too much friction or connectivity issues.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Performance Optimization:
+\f1\b0  If the pilot reveals any slowness or app instability, optimize:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	For example, if memory is an issue, consider downsizing the model or releasing it from memory when not needed.\
+	\'95	If inference is fast but loading the model each time is slow, keep the model loaded in memory (initialize once).\
+	\'95	Ensure that taking many pictures in a row doesn\'92t bloat storage \'96 perhaps auto-delete local copies after upload to S3.\
+	\'95	If using a GoPro stream, ensure the video handling (HLS segments) is efficient. It might be beyond scope to optimize video streaming now; at minimum make sure capturing one frame at a time works reliably.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Finalize Documentation & Guideline Alignment:
+\f1\b0  Document the behavior of the AI and ensure it aligns with standard scoring:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	E.g. \'93AI Teat Score is based on visible teat-end ring roughness. It may not account for internal factors. It uses the same 1-4 scale as OMAFRA\'92s guideline.\'94 This documentation will help when training users or if someone questions a result.\
+	\'95	Also include instructions in the user guide for the photo module (e.g. how to position the camera, the need for cleaning the camera lens, etc., to get good results).\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Back-end Adjustments:
+\f1\b0  As the system is now more complex, ensure the backend is configured for production:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Adjust Cognito settings if needed (e.g. if using email/password, maybe turn off self-signup if not needed, etc.).\
+	\'95	Ensure AppSync or API Gateway has appropriate throttling or scaling (likely not an issue for low user count, but check if DataStore sync is efficient with images \'96 actually large images won\'92t sync via AppSync, we use S3 for that).\
+	\'95	Set up a QuickSight dashboard (or at least plan) to visualize the data collected: e.g. average teat score per farm over time, distribution of scores, correlation with machine parameters (this might be beyond immediate scope, but since QuickSight was mentioned, if time permits, do a quick dashboard for management to see the insights).\
+	\'95	If Grafana Cloud is to be used, set up data sources (CloudWatch or AppSync logs) to monitor usage, but for an internal app, CloudWatch alone might suffice.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Final Testing (Regression):
+\f1\b0  Do a full run-through of both modules (Audit + AI) together:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Start an audit, fill data, capture some teat images, get results, submit everything. Then check the database: the audit record is there, images are in S3, scores are stored. Check the QuickSight or any analysis tool to ensure data flows end-to-end.\
+	\'95	Test multi-user scenario if applicable: e.g. two techs logged in \'96 does data remain separate or appropriately shared as desired? (If all internal and no data partition needed, you might allow all authenticated users to see all data \'96 ensure auth rules reflect that if needed).\
+	\'95	Verify on a variety of devices (if the company uses different phone models or both OS, test on each).\
+	\'95	Address any final bugs.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Deployment of AI Module (end of Month 6):
+\f1\b0 \
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Prepare a new 
+\f2\b app release
+\f1\b0  that includes the AI functionality. Since the Audit module is already out, this will be a major update. Use TestFlight/Enterprise distribution as before.\
+	\'95	It may be wise to mark the AI feature as \'93Beta\'94 initially, depending on confidence level, and encourage users to also use their judgment. Over time, as the model improves, this can be fully trusted.\
+	\'95	Roll out the update to the technicians. Possibly do a short training or demo to show how to use the new feature and interpret its output.\
+	\'95	Monitor usage closely in the first few weeks. Pay attention to:\
+\pard\tqr\tx900\tx1060\li1060\fi-1060\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Any app crashes (send crash logs or use a service like Sentry for React Native if set up).\
+	\'95	Model edge cases: if techs report the AI gave an obviously wrong score for a certain cow, note it and perhaps have them send the photo for you to retrain on later.\
+	\'95	Infrastructure usage: Check AWS costs and performance. AppSync/Dynamo should be fine; if something is spiking (maybe if DataStore is inefficiently syncing large images \'96 but images are on S3 so likely fine), address as needed.\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Optimize costs if needed: for example, if QuickSight is not used actively, you might pause it; if Aurora was used and shows low utilization, maybe continue serverless or consider switching to Dynamo fully. These decisions can be made now that you have real usage data.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f5\i \cf2 Milestone:
+\f1\i0  
+\f2\b AI Teat-Scoring Module Live (end of Month 6).
+\f1\b0  The app now not only digitizes audits but also provides AI-driven teat health insights on the spot. The full end-to-end solution is deployed internally.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs30 \cf2 Phase 4: Post-Deployment Maintenance and Improvements (Ongoing Month 7+)
+\f1\b0\fs28 \
+\
+While the main development is complete at this point, a few ongoing tasks will ensure the project\'92s long-term success:\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b User Support and Training:
+\f1\b0  Collect feedback from the end users (technicians, farm managers, etc.). Fix any usability issues that come up repeatedly. Provide updates or refresher training if new features are added.\
+	\'95	
+\f2\b Bug Fixes and Updates:
+\f1\b0  Address any bugs discovered in the field. Plan for periodic app updates (using the OTA capability of Expo for minor updates or new builds for major changes).\
+	\'95	
+\f2\b Model Iteration:
+\f1\b0  Continuously improve the AI model:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	As more data comes in (the app will be gathering new labeled images over time, especially if techs continue to validate or override AI predictions), use this data to retrain and improve the model. Perhaps every few months retrain with the expanded dataset to increase accuracy.\
+	\'95	If you find certain failure modes (e.g. the model struggles in very dim lighting), consider collecting additional data or augmenting for those conditions.\
+	\'95	When a significantly better model is ready, deploy it via an app update or remote model update. Clearly communicate improvements to users (e.g. \'93AI accuracy improved with more training data\'94).\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Feature Enhancements:
+\f1\b0  Once the core system is stable, you can consider adding features that were out-of-scope initially:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Integration with maintenance schedules or CRM: e.g. scheduling audits, reminders in-app.\
+	\'95	Additional analytics in-app: e.g. comparing farms, flagging outlier cows or equipment performance over time.\
+	\'95	Extend the AI capabilities (if desired): for example, detect other health issues from photos (like injuries or infections on the udder skin beyond just teat-end condition). This would be a separate project, but the framework (capturing images and on-device inference) is now in place to support it.\
+	\'95	Multi-language support, if relevant (likely not if internal and all users speak the same language).\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Infrastructure Maintenance:
+\f1\b0  Monitor AWS costs over time:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	With growth in data, DynamoDB or Aurora might need capacity adjustments. Ensure housekeeping like archiving old data if not needed frequently (to S3 or Glacier) to control storage costs if it grows large.\
+	\'95	Keep an eye on S3 storage; maybe implement a lifecycle rule to transition very old images to cheaper storage if needed.\
+	\'95	Ensure security patches and best practices are followed (rotate secrets if any, keep libraries updated, etc.). Amplify and AWS services remove a lot of server maintenance burden, but the onus is on the developer to update the client app for security updates in libraries.\
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	
+\f2\b Success Criteria:
+\f1\b0  Define metrics to evaluate success of the project:\
+\pard\tqr\tx500\tx660\li660\fi-660\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Reduction in time to complete audits (compare old manual process vs new app).\
+	\'95	Number of audits logged and consistency of data (no missing fields like on paper).\
+	\'95	The AI\'92s usage and accuracy \'96 e.g. percentage of cows flagged by AI that were genuinely in need of attention as confirmed later, etc.\
+	\'95	Feedback from users: are they confident in the system, does it make their job easier?\
+	\'95	If these are positive, the project is a success. If not, use these metrics to pinpoint where to improve (maybe the app needs to be faster, or the AI needs to be more accurate to be trusted, etc.).\
+\
+Finally, throughout the project, maintain 
+\f2\b communication with stakeholders
+\f1\b0  (your company\'92s management and the end users). Regularly demonstrate progress (e.g. end of Phase 1 demo, end of Phase 3 demo) to ensure alignment and to manage expectations. Given the project is internal, stakeholder buy-in and user adoption are as important as the technical success.\
+\
+By following this execution plan, you will incrementally build a robust system that meets the project goals. The plan ensures that each component is justified (no unnecessary spending or development) and that high-risk elements (like the ML model) are tackled with ample time and iterative improvement. The end result will be a modern, mobile-first application that streamlines milking system audits and leverages AI to enhance cow health monitoring \'96 delivered within a reasonable timeframe and budget for your company.\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\sl324\slmult1\pardirnatural\partightenfactor0
+
+\f0\b\fs34 \cf2 Sources
+\f1\b0\fs28 \
+\pard\tqr\tx100\tx260\li260\fi-260\sl324\slmult1\sb240\partightenfactor0
+\cf2 	\'95	Porter et al. (2021) \'96 Demonstrated feasibility of deep learning for classifying teat-end hyperkeratosis using ~398 images and transfer learning  , showing that image-based teat scoring is possible with high accuracy.\
+	\'95	Hao et al. (2024) \'96 Achieved >80% mAP in classifying cow teat skin condition using fine-tuned vision models , supporting the viability of the AI approach in this project.\
+	\'95	AWS Amplify Documentation \'96 Confirms that Amplify DataStore (with AppSync GraphQL) simplifies offline data synchronization for mobile apps , a key requirement for on-farm use.}
