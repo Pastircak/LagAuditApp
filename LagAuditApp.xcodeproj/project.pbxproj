@@ -6,8 +6,22 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		FA31D5C82E2C95C5001D8574 /* LagAuditAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5C72E2C95C5001D8574 /* LagAuditAppApp.swift */; };
+		FA31D5CA2E2C95C5001D8574 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5C92E2C95C5001D8574 /* PersistenceController.swift */; };
+		FA31D5CD2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5CB2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld */; };
+		FA31D5CF2E2C95C5001D8574 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5CE2E2C95C5001D8574 /* ContentView.swift */; };
+		FA31D5D12E2C95C6001D8574 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA31D5D02E2C95C6001D8574 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		FA31D5C42E2C95C5001D8574 /* LagAuditApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LagAuditApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA31D5C72E2C95C5001D8574 /* LagAuditAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LagAuditAppApp.swift; sourceTree = "<group>"; };
+		FA31D5C92E2C95C5001D8574 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		FA31D5CC2E2C95C5001D8574 /* LagAuditApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LagAuditApp.xcdatamodel; sourceTree = "<group>"; };
+		FA31D5CE2E2C95C5001D8574 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		FA31D5D02E2C95C6001D8574 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FA31D5D22E2C95C6001D8574 /* LagAuditApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LagAuditApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +46,12 @@
 		FA31D5BB2E2C95C5001D8574 = {
 			isa = PBXGroup;
 			children = (
+				FA31D5DE2E2C9AFB001D8574 /* Utilities */,
+				FA31D5DD2E2C9AF4001D8574 /* Supporting */,
+				FA31D5DC2E2C9AE8001D8574 /* Resources */,
+				FA31D5DB2E2C9ADF001D8574 /* Views */,
+				FA31D5DA2E2C9AD3001D8574 /* ViewModels */,
+				FA31D5D82E2C9AA6001D8574 /* Models */,
 				FA31D5C62E2C95C5001D8574 /* LagAuditApp */,
 				FA31D5C52E2C95C5001D8574 /* Products */,
 			);
@@ -43,6 +63,54 @@
 				FA31D5C42E2C95C5001D8574 /* LagAuditApp.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FA31D5D82E2C9AA6001D8574 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FA31D5CB2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld */,
+				FA31D5D22E2C95C6001D8574 /* LagAuditApp.entitlements */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FA31D5DA2E2C9AD3001D8574 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		FA31D5DB2E2C9ADF001D8574 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FA31D5CE2E2C95C5001D8574 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FA31D5DC2E2C9AE8001D8574 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA31D5D02E2C95C6001D8574 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FA31D5DD2E2C9AF4001D8574 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				FA31D5C72E2C95C5001D8574 /* LagAuditAppApp.swift */,
+				FA31D5C92E2C95C5001D8574 /* PersistenceController.swift */,
+			);
+			path = Supporting;
+			sourceTree = "<group>";
+		};
+		FA31D5DE2E2C9AFB001D8574 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,6 +177,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA31D5D12E2C95C6001D8574 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +188,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA31D5CD2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld in Sources */,
+				FA31D5C82E2C95C5001D8574 /* LagAuditAppApp.swift in Sources */,
+				FA31D5CF2E2C95C5001D8574 /* ContentView.swift in Sources */,
+				FA31D5CA2E2C95C5001D8574 /* PersistenceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,6 +416,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		FA31D5CB2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				FA31D5CC2E2C95C5001D8574 /* LagAuditApp.xcdatamodel */,
+			);
+			currentVersion = FA31D5CC2E2C95C5001D8574 /* LagAuditApp.xcdatamodel */;
+			path = LagAuditApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = FA31D5BC2E2C95C5001D8574 /* Project object */;
 }
