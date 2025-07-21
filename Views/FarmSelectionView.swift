@@ -151,7 +151,7 @@ struct AddFarmView: View {
         let trimmedLocation = farmLocation.trimmingCharacters(in: .whitespacesAndNewlines)
         
         do {
-            try dataManager.createFarm(
+            _ = try dataManager.createFarm(
                 name: trimmedName, 
                 location: trimmedLocation.isEmpty ? "" : trimmedLocation,
                 contactPerson: "",

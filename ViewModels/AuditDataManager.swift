@@ -44,6 +44,7 @@ class AuditDataManager: ObservableObject {
     }
     
     // MARK: - Farm Operations
+    @discardableResult
     func createFarm(name: String, location: String, contactPerson: String, phone: String) throws -> Farm {
         let farm = Farm(context: context)
         farm.id = UUID()
@@ -99,6 +100,7 @@ class AuditDataManager: ObservableObject {
     }
     
     // MARK: - Audit Entry Operations
+    @discardableResult
     func addAuditEntry(to audit: Audit, parameter: String, value: Double, unit: String, category: String) throws -> AuditEntry {
         let entry = AuditEntry(context: context)
         entry.id = UUID()

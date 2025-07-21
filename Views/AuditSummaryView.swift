@@ -186,7 +186,7 @@ struct AuditSummaryView: View {
                 // Add audit entries
                 for entry in auditData.entries {
                     if let value = Double(entry.value) {
-                        try dataManager.addAuditEntry(
+                        _ = try dataManager.addAuditEntry(
                             to: audit,
                             parameter: entry.parameter,
                             value: value,
