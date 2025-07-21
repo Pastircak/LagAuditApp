@@ -25,6 +25,7 @@
 		FA3C94E02E2EC1A700CA386E /* DiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C94D42E2EC1A700CA386E /* DiagnosticsView.swift */; };
 		FA3C94E32E2EC2FB00CA386E /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C94E22E2EC2FB00CA386E /* HistoryView.swift */; };
 		FA3C94E42E2EC2FB00CA386E /* DraftsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C94E12E2EC2FB00CA386E /* DraftsView.swift */; };
+		FA3C94E62E2ED2B900CA386E /* DiagnosticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3C94E52E2ED2B900CA386E /* DiagnosticsViewModel.swift */; };
 		FA5C627D2E2CA6B500E524BE /* StartAuditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C627C2E2CA6B500E524BE /* StartAuditView.swift */; };
 		FA5C62802E2CA86400E524BE /* AuditHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C627F2E2CA86400E524BE /* AuditHistoryView.swift */; };
 		FA5C62822E2CA88200E524BE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA5C62812E2CA88200E524BE /* SettingsView.swift */; };
@@ -58,6 +59,7 @@
 		FA3C94D92E2EC1A700CA386E /* RecommendationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsView.swift; sourceTree = "<group>"; };
 		FA3C94E12E2EC2FB00CA386E /* DraftsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraftsView.swift; sourceTree = "<group>"; };
 		FA3C94E22E2EC2FB00CA386E /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		FA3C94E52E2ED2B900CA386E /* DiagnosticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsViewModel.swift; sourceTree = "<group>"; };
 		FA5C627C2E2CA6B500E524BE /* StartAuditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartAuditView.swift; sourceTree = "<group>"; };
 		FA5C627F2E2CA86400E524BE /* AuditHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditHistoryView.swift; sourceTree = "<group>"; };
 		FA5C62812E2CA88200E524BE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 		FA31D5DA2E2C9AD3001D8574 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				FA3C94E52E2ED2B900CA386E /* DiagnosticsViewModel.swift */,
 				FA5C62832E2CA90000E524BE /* AuditDataManager.swift */,
 			);
 			path = ViewModels;
@@ -274,6 +277,7 @@
 				FA5C628A2E2CA93000E524BE /* Extensions.swift in Sources */,
 				FA5C628F2E2CA96000E524BE /* AuditTypes.swift in Sources */,
 				FA3C94DA2E2EC1A700CA386E /* RecommendationsView.swift in Sources */,
+				FA3C94E62E2ED2B900CA386E /* DiagnosticsViewModel.swift in Sources */,
 				FA3C94DB2E2EC1A700CA386E /* FarmInfoView.swift in Sources */,
 				FA3C94DC2E2EC1A700CA386E /* MilkingTimeView.swift in Sources */,
 				FA3C94DD2E2EC1A700CA386E /* PulsatorsView.swift in Sources */,
