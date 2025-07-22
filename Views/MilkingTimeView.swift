@@ -2,7 +2,7 @@ import SwiftUI
 import Foundation
 
 struct MilkingTimeView: View {
-    @State private var cows: [MilkingTimeRow] = (1...10).map { MilkingTimeRow(position: Int16($0)) }
+    @ObservedObject var auditViewModel: AuditViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -18,8 +18,15 @@ struct MilkingTimeView: View {
             }
             ScrollView {
                 LazyVStack(spacing: 16) {
-                    ForEach(cows.indices, id: \ .self) { idx in
-                        CowCardView(cow: $cows[idx], onRemove: { removeCow(at: idx) }, showRemove: cows.count > 1)
+                    ForEach(auditViewModel.milkingTimeRows.indices, id: \.self) { idx in
+                        CowCardView(
+                            cow: Binding(
+                                get: { auditViewModel.milkingTimeRows[idx] },
+                                set: { auditViewModel.milkingTimeRows[idx] = $0 }
+                            ),
+                            onRemove: { removeCow(at: idx) },
+                            showRemove: auditViewModel.milkingTimeRows.count > 1
+                        )
                     }
                 }
                 .padding(.vertical)
@@ -29,12 +36,12 @@ struct MilkingTimeView: View {
     }
     
     private func addCow() {
-        let nextPosition = (cows.last?.position ?? 0) + 1
-        cows.append(MilkingTimeRow(position: nextPosition))
+        let nextPosition = (auditViewModel.milkingTimeRows.last?.position ?? 0) + 1
+        auditViewModel.milkingTimeRows.append(MilkingTimeRow(position: nextPosition))
     }
     
     private func removeCow(at idx: Int) {
-        cows.remove(at: idx)
+        auditViewModel.milkingTimeRows.remove(at: idx)
     }
 }
 
@@ -66,7 +73,7 @@ struct CowCardView: View {
             MetricInputStepper(label: "Stimulation Time", value: $cow.stimulationTime, range: 0...300, step: 1, unit: "s")
         }
         .padding()
-        .background(Color.white)
+        .background(Color(.systemBackground))
         .cornerRadius(16)
         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
@@ -93,35 +100,14 @@ struct MetricInputStepper: View {
                     textValue = String(format: "%g", newValue)
                 }
             ), in: range, step: step) {
-                EmptyView()
+                Text("\(String(format: "%g", value ?? range.lowerBound)) \(unit)")
+                    .frame(width: 80, alignment: .trailing)
             }
-            .labelsHidden()
-            TextField("--", text: Binding(
-                get: {
-                    if let v = value {
-                        if textValue.isEmpty || Double(textValue) != v {
-                            textValue = String(format: "%g", v)
-                        }
-                        return textValue
-                    } else {
-                        return ""
-                    }
-                },
-                set: { newText in
-                    textValue = newText
-                    if let d = Double(newText) {
-                        if d >= range.lowerBound && d <= range.upperBound {
-                            value = d
-                        }
-                    }
-                }
-            ))
-            .keyboardType(.numberPad)
-            .frame(width: 60)
-            .multilineTextAlignment(.trailing)
-            .textFieldStyle(RoundedBorderTextFieldStyle())
-            Text(unit)
-                .foregroundColor(.secondary)
+        }
+        .onAppear {
+            if let val = value {
+                textValue = String(format: "%g", val)
+            }
         }
     }
 } 

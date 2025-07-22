@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RecommendationsView: View {
-    @State private var recommendations: [RecommendationRowModel] = [RecommendationRowModel()]
+    @ObservedObject var auditViewModel: AuditViewModel
     
     var body: some View {
         ScrollView {
@@ -15,47 +15,57 @@ struct RecommendationsView: View {
                         Label("Add", systemImage: "plus.circle")
                     }
                 }
-                ForEach(recommendations.indices, id: \ .self) { idx in
+                ForEach(auditViewModel.recommendations.indices, id: \.self) { idx in
                     RecommendationRow(
-                        model: $recommendations[idx],
+                        model: $auditViewModel.recommendations[idx],
                         onDelete: { removeRecommendation(at: idx) },
-                        showDelete: recommendations.count > 1
+                        showDelete: auditViewModel.recommendations.count > 1
                     )
                 }
             }
             .padding()
         }
+        .onAppear {
+            // Initialize recommendations if not already present
+            if auditViewModel.recommendations.isEmpty {
+                auditViewModel.recommendations = [Recommendation(index: 1, text: "")]
+            }
+        }
     }
     
     private func addRecommendation() {
-        recommendations.append(RecommendationRowModel())
+        let newIndex = Int8(auditViewModel.recommendations.count + 1)
+        auditViewModel.recommendations.append(Recommendation(index: newIndex, text: ""))
     }
+    
     private func removeRecommendation(at idx: Int) {
-        recommendations.remove(at: idx)
+        auditViewModel.recommendations.remove(at: idx)
+        // Update indices
+        for i in 0..<auditViewModel.recommendations.count {
+            auditViewModel.recommendations[i].index = Int8(i + 1)
+        }
     }
-}
-
-struct RecommendationRowModel: Identifiable {
-    var id = UUID()
-    var isChecked: Bool = false
-    var text: String = ""
 }
 
 struct RecommendationRow: View {
-    @Binding var model: RecommendationRowModel
+    @Binding var model: Recommendation
     var onDelete: () -> Void
     var showDelete: Bool
+    
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
-            Button(action: { model.isChecked.toggle() }) {
-                Image(systemName: model.isChecked ? "checkmark.square.fill" : "square")
-                    .foregroundColor(model.isChecked ? .green : .gray)
-                    .font(.title2)
-            }
-            .buttonStyle(PlainButtonStyle())
-            TextEditor(text: $model.text)
-                .frame(height: 60)
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.2)))
+            Text("\(model.index).")
+                .font(.subheadline)
+                .fontWeight(.medium)
+                .frame(width: 30, alignment: .leading)
+            
+            TextEditor(text: Binding(
+                get: { model.text },
+                set: { model.text = $0 }
+            ))
+            .frame(height: 60)
+            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.2)))
+            
             if showDelete {
                 Button(action: onDelete) {
                     Image(systemName: "minus.circle.fill")

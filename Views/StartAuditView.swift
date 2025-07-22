@@ -227,7 +227,7 @@ struct StartAuditView: View {
         let allData = getAllAuditData()
         let entries = allData.map { parameter, value in
             let status = AuditGuidelines.evaluateParameter(parameter, value: value)
-            let auditStatus: AuditStatus
+            let auditStatus: ParameterStatus
             switch status {
             case .normal:
                 auditStatus = .normal

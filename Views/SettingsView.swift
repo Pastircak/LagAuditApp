@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct SettingsView: View {
     @StateObject private var dataManager: AuditDataManager
@@ -322,11 +323,17 @@ struct ExportOptionsView: View {
     @State private var showingExportSuccess = false
     @State private var showingExportError = false
     @State private var errorMessage = ""
+    @State private var showingShareSheet = false
+    @State private var pdfURL: URL?
     
     var body: some View {
         NavigationStack {
             List {
                 Section("Export Format") {
+                    Button("Export as PDF") {
+                        exportAsPDF()
+                    }
+                    
                     Button("Export as CSV") {
                         exportAsCSV()
                     }
@@ -362,6 +369,190 @@ struct ExportOptionsView: View {
             } message: {
                 Text(errorMessage)
             }
+            .sheet(isPresented: $showingShareSheet) {
+                if let url = pdfURL {
+                    ShareSheet(activityItems: [url])
+                }
+            }
+        }
+    }
+    
+    private func exportAsPDF() {
+        // Export the most recent audit as PDF
+        guard let latestAudit = dataManager.audits.first else {
+            errorMessage = "No audits available to export"
+            showingExportError = true
+            return
+        }
+        
+        if let url = generatePDFReport(for: latestAudit) {
+            pdfURL = url
+            showingShareSheet = true
+        } else {
+            errorMessage = "Failed to generate PDF report"
+            showingExportError = true
+        }
+    }
+    
+    private func generatePDFReport(for audit: Audit) -> URL? {
+        let tempURL = FileManager.default.temporaryDirectory.appendingPathComponent("AuditReport_\(audit.id?.uuidString ?? "unknown").pdf")
+        
+        let renderer = UIGraphicsPDFRenderer(bounds: CGRect(x: 0, y: 0, width: 612, height: 792)) // 8.5" x 11"
+        
+        do {
+            try renderer.writePDF(to: tempURL) { context in
+                context.beginPage()
+                let pageRect = context.pdfContextBounds
+                var yPosition: CGFloat = 20
+                
+                // Header
+                let title = "LAG AUDIT REPORT"
+                let titleAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.boldSystemFont(ofSize: 24),
+                    .foregroundColor: UIColor.black
+                ]
+                
+                let titleSize = title.size(withAttributes: titleAttributes)
+                let titleX = (pageRect.width - titleSize.width) / 2
+                title.draw(at: CGPoint(x: titleX, y: yPosition), withAttributes: titleAttributes)
+                yPosition += 40
+                
+                // Audit details
+                let detailsAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 12),
+                    .foregroundColor: UIColor.darkGray
+                ]
+                
+                let farmName = audit.farmName ?? "Unknown Farm"
+                let technician = audit.technician ?? "Unknown Technician"
+                let dateString = audit.date?.formatted(date: .long, time: .omitted) ?? "Unknown Date"
+                
+                let details = [
+                    "Farm: \(farmName)",
+                    "Technician: \(technician)",
+                    "Date: \(dateString)"
+                ]
+                
+                for detail in details {
+                    detail.draw(at: CGPoint(x: 50, y: yPosition), withAttributes: detailsAttributes)
+                    yPosition += 20
+                }
+                
+                yPosition += 20
+                
+                // Audit Results
+                let sectionTitle = "AUDIT RESULTS"
+                let sectionAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.boldSystemFont(ofSize: 16),
+                    .foregroundColor: UIColor.black
+                ]
+                
+                sectionTitle.draw(at: CGPoint(x: 50, y: yPosition), withAttributes: sectionAttributes)
+                yPosition += 25
+                
+                // Draw a line under the section title
+                let linePath = UIBezierPath()
+                linePath.move(to: CGPoint(x: 50, y: yPosition))
+                linePath.addLine(to: CGPoint(x: pageRect.width - 50, y: yPosition))
+                UIColor.lightGray.setStroke()
+                linePath.lineWidth = 1
+                linePath.stroke()
+                yPosition += 20
+                
+                // Table headers
+                let headerAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.boldSystemFont(ofSize: 12),
+                    .foregroundColor: UIColor.black
+                ]
+                
+                let headers = ["Parameter", "Value", "Unit", "Status"]
+                let columnWidths: [CGFloat] = [200, 100, 80, 100]
+                var xPosition: CGFloat = 60
+                
+                for (index, header) in headers.enumerated() {
+                    header.draw(at: CGPoint(x: xPosition, y: yPosition), withAttributes: headerAttributes)
+                    xPosition += columnWidths[index]
+                }
+                
+                yPosition += 20
+                
+                // Draw header line
+                let headerLinePath = UIBezierPath()
+                headerLinePath.move(to: CGPoint(x: 60, y: yPosition))
+                headerLinePath.addLine(to: CGPoint(x: pageRect.width - 60, y: yPosition))
+                UIColor.black.setStroke()
+                headerLinePath.lineWidth = 1
+                headerLinePath.stroke()
+                yPosition += 15
+                
+                // Audit entries
+                let entryAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 11),
+                    .foregroundColor: UIColor.black
+                ]
+                
+                if let entries = audit.entries?.allObjects as? [AuditEntry] {
+                    for entry in entries {
+                        xPosition = 60
+                        
+                        // Parameter name
+                        let parameter = entry.parameter ?? "Unknown"
+                        parameter.draw(at: CGPoint(x: xPosition, y: yPosition), withAttributes: entryAttributes)
+                        xPosition += columnWidths[0]
+                        
+                        // Value
+                        let value = String(format: "%.2f", entry.value)
+                        value.draw(at: CGPoint(x: xPosition, y: yPosition), withAttributes: entryAttributes)
+                        xPosition += columnWidths[1]
+                        
+                        // Unit
+                        let unit = entry.unit ?? ""
+                        unit.draw(at: CGPoint(x: xPosition, y: yPosition), withAttributes: entryAttributes)
+                        xPosition += columnWidths[2]
+                        
+                        // Status
+                        let status = entry.status ?? "Unknown"
+                        let statusColor = statusColor(for: status)
+                        let statusAttributes: [NSAttributedString.Key: Any] = [
+                            .font: UIFont.systemFont(ofSize: 11),
+                            .foregroundColor: statusColor
+                        ]
+                        status.draw(at: CGPoint(x: xPosition, y: yPosition), withAttributes: statusAttributes)
+                        
+                        yPosition += 18
+                    }
+                }
+                
+                // Footer
+                let footerAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.systemFont(ofSize: 10),
+                    .foregroundColor: UIColor.gray
+                ]
+                
+                let footerText = "Generated by Lag Audit App on \(Date().formatted(date: .long, time: .shortened))"
+                let footerSize = footerText.size(withAttributes: footerAttributes)
+                let footerX = (pageRect.width - footerSize.width) / 2
+                let footerY = pageRect.height - 30
+                
+                footerText.draw(at: CGPoint(x: footerX, y: footerY), withAttributes: footerAttributes)
+            }
+            return tempURL
+        } catch {
+            print("Failed to create PDF: \(error)")
+            return nil
+        }
+    }
+    
+    private func statusColor(for status: String) -> UIColor {
+        switch status.lowercased() {
+        case "normal", "good":
+            return UIColor.systemGreen
+        case "warning", "high", "low":
+            return UIColor.systemOrange
+        case "critical", "bad":
+            return UIColor.systemRed
+        default:
+            return UIColor.black
         }
     }
     

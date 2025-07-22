@@ -1,28 +1,80 @@
 import SwiftUI
 
 struct DetachersView: View {
-    @State private var clusterRemovalDelay: Double = 0
-    @State private var blinkTimeDelay: Double = 0
-    @State private var detachFlowSetting: Double = 0
-    @State private var letDownDelay: Double = 0
-    @State private var notes: String = ""
+    @ObservedObject var auditViewModel: AuditViewModel
     
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 CardView(header: "Detacher Settings") {
                     VStack(spacing: 16) {
-                        AuditStepperField(label: "Cluster Removal Delay (s)", value: $clusterRemovalDelay, range: 0...20, step: 0.1)
-                        AuditStepperField(label: "Blink Time Delay (s)", value: $blinkTimeDelay, range: 0...20, step: 0.1)
-                        AuditStepperField(label: "Detach Flow Setting", value: $detachFlowSetting, range: 0...20, step: 0.1)
-                        AuditStepperField(label: "Let Down Delay (s)", value: $letDownDelay, range: 0...20, step: 0.1)
+                        AuditStepperField(
+                            label: "Cluster Removal Delay (s)",
+                            value: Binding(
+                                get: { auditViewModel.detacherSettings?.clusterRemovalDelay ?? 0 },
+                                set: { 
+                                    if auditViewModel.detacherSettings == nil {
+                                        auditViewModel.detacherSettings = DetacherSettings()
+                                    }
+                                    auditViewModel.detacherSettings?.clusterRemovalDelay = $0 
+                                }
+                            ),
+                            range: 0...20, step: 0.1
+                        )
+                        AuditStepperField(
+                            label: "Blink Time Delay (s)",
+                            value: Binding(
+                                get: { auditViewModel.detacherSettings?.blinkTimeDelay ?? 0 },
+                                set: { 
+                                    if auditViewModel.detacherSettings == nil {
+                                        auditViewModel.detacherSettings = DetacherSettings()
+                                    }
+                                    auditViewModel.detacherSettings?.blinkTimeDelay = $0 
+                                }
+                            ),
+                            range: 0...20, step: 0.1
+                        )
+                        AuditStepperField(
+                            label: "Detach Flow Setting",
+                            value: Binding(
+                                get: { auditViewModel.detacherSettings?.detachFlowSetting ?? 0 },
+                                set: { 
+                                    if auditViewModel.detacherSettings == nil {
+                                        auditViewModel.detacherSettings = DetacherSettings()
+                                    }
+                                    auditViewModel.detacherSettings?.detachFlowSetting = $0 
+                                }
+                            ),
+                            range: 0...20, step: 0.1
+                        )
+                        AuditStepperField(
+                            label: "Let Down Delay (s)",
+                            value: Binding(
+                                get: { auditViewModel.detacherSettings?.letDownDelay ?? 0 },
+                                set: { 
+                                    if auditViewModel.detacherSettings == nil {
+                                        auditViewModel.detacherSettings = DetacherSettings()
+                                    }
+                                    auditViewModel.detacherSettings?.letDownDelay = $0 
+                                }
+                            ),
+                            range: 0...20, step: 0.1
+                        )
                     }
                 }
                 CardView(header: "Notes") {
                     HStack(alignment: .top) {
-                        TextEditor(text: $notes)
-                            .frame(height: 80)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.2)))
+                        TextEditor(text: Binding(
+                            get: { auditViewModel.detacherSettings?.notes ?? "" },
+                            set: { 
+                                if auditViewModel.detacherSettings == nil {
+                                    auditViewModel.detacherSettings = DetacherSettings()
+                                }
+                                auditViewModel.detacherSettings?.notes = $0 
+                            }
+                        ))
+                        .frame(height: 80)
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.2)))
                         Button(action: { /* Speech-to-text placeholder */ }) {
                             Image(systemName: "mic.fill")
                                 .font(.title2)

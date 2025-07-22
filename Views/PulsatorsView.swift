@@ -1,9 +1,7 @@
 import SwiftUI
 
 struct PulsatorsView: View {
-    @State private var pulsators: [PulsatorRow] = (1...6).map { PulsatorRow(number: Int16($0)) }
-    @State private var averages = PulsationAverage()
-    @State private var voltageChecks = VoltageChecks()
+    @ObservedObject var auditViewModel: AuditViewModel
     
     var body: some View {
         ScrollView {
@@ -18,15 +16,29 @@ struct PulsatorsView: View {
                     }
                 }
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 12) {
-                    ForEach(pulsators.indices, id: \ .self) { idx in
-                        PulsatorRowCard(pulsator: $pulsators[idx], onDelete: { removePulsator(at: idx) }, onDuplicate: { duplicatePulsator(at: idx) }, showDelete: pulsators.count > 1)
+                    ForEach(auditViewModel.pulsatorRows.indices, id: \.self) { idx in
+                        PulsatorRowCard(
+                            pulsator: Binding(
+                                get: { auditViewModel.pulsatorRows[idx] },
+                                set: { auditViewModel.pulsatorRows[idx] = $0 }
+                            ),
+                            onDelete: { removePulsator(at: idx) },
+                            onDuplicate: { duplicatePulsator(at: idx) },
+                            showDelete: auditViewModel.pulsatorRows.count > 1
+                        )
                     }
                 }
                 CardView(header: "Averages") {
-                    PulsationAverageFields(average: $averages)
+                    PulsationAverageFields(average: Binding(
+                        get: { auditViewModel.pulsationAverages ?? PulsationAverage() },
+                        set: { auditViewModel.pulsationAverages = $0 }
+                    ))
                 }
                 CardView(header: "Voltage Checks") {
-                    VoltageChecksFields(voltage: $voltageChecks)
+                    VoltageChecksFields(voltage: Binding(
+                        get: { auditViewModel.voltageChecks ?? VoltageChecks() },
+                        set: { auditViewModel.voltageChecks = $0 }
+                    ))
                 }
             }
             .padding()
@@ -34,22 +46,22 @@ struct PulsatorsView: View {
     }
     
     private func addPulsator() {
-        let nextNumber = (pulsators.last?.number ?? 0) + 1
-        pulsators.append(PulsatorRow(number: nextNumber))
+        let nextNumber = (auditViewModel.pulsatorRows.last?.number ?? 0) + 1
+        auditViewModel.pulsatorRows.append(PulsatorRow(number: nextNumber))
     }
     private func removePulsator(at idx: Int) {
-        pulsators.remove(at: idx)
+        auditViewModel.pulsatorRows.remove(at: idx)
     }
     private func duplicatePulsator(at idx: Int) {
-        let row = pulsators[idx]
-        let newRow = PulsatorRow(number: (pulsators.last?.number ?? 0) + 1,
+        let row = auditViewModel.pulsatorRows[idx]
+        let newRow = PulsatorRow(number: (auditViewModel.pulsatorRows.last?.number ?? 0) + 1,
                                  ratioFront: row.ratioFront, ratioRear: row.ratioRear,
                                  aFront: row.aFront, aRear: row.aRear,
                                  bFront: row.bFront, bRear: row.bRear,
                                  cFront: row.cFront, cRear: row.cRear,
                                  dFront: row.dFront, dRear: row.dRear,
                                  rate: row.rate)
-        pulsators.append(newRow)
+        auditViewModel.pulsatorRows.append(newRow)
     }
 }
 
@@ -88,11 +100,11 @@ struct PulsatorRowCard: View {
             PulsatorMetricField(label: "C phase (ms) Rear", value: $pulsator.cRear)
             PulsatorMetricField(label: "D phase (ms) Front", value: $pulsator.dFront)
             PulsatorMetricField(label: "D phase (ms) Rear", value: $pulsator.dRear)
-            PulsatorMetricField(label: "Rate (cpm)", value: $pulsator.rate)
+            PulsatorMetricField(label: "Rate (ppm)", value: $pulsator.rate)
         }
         .padding()
-        .background(Color.white)
-        .cornerRadius(16)
+        .background(Color(.systemBackground))
+        .cornerRadius(12)
         .shadow(color: Color.black.opacity(0.05), radius: 4, x: 0, y: 2)
     }
 }
@@ -100,27 +112,20 @@ struct PulsatorRowCard: View {
 struct PulsatorMetricField: View {
     let label: String
     @Binding var value: Double?
-    @State private var textValue: String = ""
+    
     var body: some View {
         HStack {
             Text(label)
-                .frame(width: 140, alignment: .leading)
+                .font(.caption)
+                .frame(width: 100, alignment: .leading)
             Spacer()
             TextField("--", text: Binding(
-                get: {
-                    if let v = value {
-                        if textValue.isEmpty || Double(textValue) != v {
-                            textValue = String(format: "%g", v)
-                        }
-                        return textValue
-                    } else {
-                        return ""
-                    }
-                },
-                set: { newText in
-                    textValue = newText
-                    if let d = Double(newText) {
-                        value = d
+                get: { value.map { String(format: "%.1f", $0) } ?? "" },
+                set: { newValue in
+                    if let doubleValue = Double(newValue) {
+                        value = doubleValue
+                    } else if newValue.isEmpty {
+                        value = nil
                     }
                 }
             ))
@@ -134,26 +139,132 @@ struct PulsatorMetricField: View {
 
 struct PulsationAverageFields: View {
     @Binding var average: PulsationAverage
+    
     var body: some View {
-        VStack(spacing: 8) {
-            PulsatorMetricField(label: "Ratio 1", value: $average.ratio1)
-            PulsatorMetricField(label: "Ratio 2", value: $average.ratio2)
-            PulsatorMetricField(label: "A phase", value: $average.aPhase)
-            PulsatorMetricField(label: "B phase", value: $average.bPhase)
-            PulsatorMetricField(label: "C phase", value: $average.cPhase)
-            PulsatorMetricField(label: "D phase", value: $average.dPhase)
-            PulsatorMetricField(label: "Rate", value: $average.rate)
+        VStack(spacing: 12) {
+            HStack {
+                Text("Ratio Front")
+                    .frame(width: 100, alignment: .leading)
+                Spacer()
+                TextField("--", text: Binding(
+                    get: { average.ratio1.map { String(format: "%.1f", $0) } ?? "" },
+                    set: { newValue in
+                        if let doubleValue = Double(newValue) {
+                            average.ratio1 = doubleValue
+                        } else if newValue.isEmpty {
+                            average.ratio1 = nil
+                        }
+                    }
+                ))
+                .keyboardType(.decimalPad)
+                .frame(width: 60)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            HStack {
+                Text("Ratio Rear")
+                    .frame(width: 100, alignment: .leading)
+                Spacer()
+                TextField("--", text: Binding(
+                    get: { average.ratio2.map { String(format: "%.1f", $0) } ?? "" },
+                    set: { newValue in
+                        if let doubleValue = Double(newValue) {
+                            average.ratio2 = doubleValue
+                        } else if newValue.isEmpty {
+                            average.ratio2 = nil
+                        }
+                    }
+                ))
+                .keyboardType(.decimalPad)
+                .frame(width: 60)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            HStack {
+                Text("Rate (ppm)")
+                    .frame(width: 100, alignment: .leading)
+                Spacer()
+                TextField("--", text: Binding(
+                    get: { average.rate.map { String(format: "%.0f", $0) } ?? "" },
+                    set: { newValue in
+                        if let doubleValue = Double(newValue) {
+                            average.rate = doubleValue
+                        } else if newValue.isEmpty {
+                            average.rate = nil
+                        }
+                    }
+                ))
+                .keyboardType(.decimalPad)
+                .frame(width: 60)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
         }
     }
 }
 
 struct VoltageChecksFields: View {
     @Binding var voltage: VoltageChecks
+    
     var body: some View {
-        VStack(spacing: 8) {
-            PulsatorMetricField(label: "At Control", value: $voltage.atControl)
-            PulsatorMetricField(label: "At Last", value: $voltage.atLast)
-            PulsatorMetricField(label: "At Other", value: $voltage.atOther)
+        VStack(spacing: 12) {
+            HStack {
+                Text("At Control")
+                    .frame(width: 100, alignment: .leading)
+                Spacer()
+                TextField("--", text: Binding(
+                    get: { voltage.atControl.map { String(format: "%.1f", $0) } ?? "" },
+                    set: { newValue in
+                        if let doubleValue = Double(newValue) {
+                            voltage.atControl = doubleValue
+                        } else if newValue.isEmpty {
+                            voltage.atControl = nil
+                        }
+                    }
+                ))
+                .keyboardType(.decimalPad)
+                .frame(width: 60)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            HStack {
+                Text("At Last")
+                    .frame(width: 100, alignment: .leading)
+                Spacer()
+                TextField("--", text: Binding(
+                    get: { voltage.atLast.map { String(format: "%.1f", $0) } ?? "" },
+                    set: { newValue in
+                        if let doubleValue = Double(newValue) {
+                            voltage.atLast = doubleValue
+                        } else if newValue.isEmpty {
+                            voltage.atLast = nil
+                        }
+                    }
+                ))
+                .keyboardType(.decimalPad)
+                .frame(width: 60)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
+            HStack {
+                Text("At Other")
+                    .frame(width: 100, alignment: .leading)
+                Spacer()
+                TextField("--", text: Binding(
+                    get: { voltage.atOther.map { String(format: "%.1f", $0) } ?? "" },
+                    set: { newValue in
+                        if let doubleValue = Double(newValue) {
+                            voltage.atOther = doubleValue
+                        } else if newValue.isEmpty {
+                            voltage.atOther = nil
+                        }
+                    }
+                ))
+                .keyboardType(.decimalPad)
+                .frame(width: 60)
+                .multilineTextAlignment(.trailing)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            }
         }
     }
 } 

@@ -24,7 +24,7 @@ struct LagAuditAppApp: App {
     }
     
     private func initializeSampleDataIfNeeded() {
-        let context = persistenceController.container.viewContext
+        let context = PersistenceController.shared.container.viewContext
         
         // Check if we have any farms
         let farmRequest: NSFetchRequest<Farm> = Farm.fetchRequest()

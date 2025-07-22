@@ -1,54 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24F74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Audit" representedClassName="Audit" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="farmId" optional="YES" attributeType="String"/>
-        <attribute name="farmName" optional="YES" attributeType="String"/>
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="technician" optional="YES" attributeType="String"/>
-        <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="detacherSettingsData" optional="YES" attributeType="Binary"/>
+        <attribute name="diagnosticsData" optional="YES" attributeType="Binary"/>
+        <attribute name="farmId" optional="YES" attributeType="String"/>
+        <attribute name="farmInfoData" optional="YES" attributeType="Binary"/>
+        <attribute name="farmName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="milkingTimeData" optional="YES" attributeType="Binary"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="pulsationData" optional="YES" attributeType="Binary"/>
+        <attribute name="pulsationAveragesData" optional="YES" attributeType="Binary"/>
+        <attribute name="pulsatorData" optional="YES" attributeType="Binary"/>
+        <attribute name="recommendationsData" optional="YES" attributeType="Binary"/>
+        <attribute name="status" optional="YES" attributeType="String" defaultValueString="draft"/>
+        <attribute name="technician" optional="YES" attributeType="String"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="voltageChecksData" optional="YES" attributeType="Binary"/>
         <relationship name="entries" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="AuditEntry" inverseName="audit" inverseEntity="AuditEntry"/>
         <relationship name="farm" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Farm" inverseName="audits" inverseEntity="Farm"/>
         <relationship name="teatScores" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TeatScore" inverseName="audit" inverseEntity="TeatScore"/>
     </entity>
     <entity name="AuditEntry" representedClassName="AuditEntry" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="parameter" optional="YES" attributeType="String"/>
-        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="unit" optional="YES" attributeType="String"/>
-        <attribute name="status" optional="YES" attributeType="String"/>
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="parameter" optional="YES" attributeType="String"/>
+        <attribute name="status" optional="YES" attributeType="String"/>
+        <attribute name="unit" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="audit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Audit" inverseName="entries" inverseEntity="Audit"/>
     </entity>
+    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
     <entity name="Farm" representedClassName="Farm" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="contactPerson" optional="YES" attributeType="String"/>
-        <attribute name="phone" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="audits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Audit" inverseName="farm" inverseEntity="Audit"/>
-    </entity>
-    <entity name="TeatScore" representedClassName="TeatScore" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="cowId" optional="YES" attributeType="String"/>
-        <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="imageKey" optional="YES" attributeType="String"/>
-        <attribute name="notes" optional="YES" attributeType="String"/>
-        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="audit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Audit" inverseName="teatScores" inverseEntity="Audit"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="phone" optional="YES" attributeType="String"/>
+        <relationship name="audits" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Audit" inverseName="farm" inverseEntity="Audit"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
-    <elements>
-        <element name="Audit" positionX="-63" positionY="-18" width="128" height="44"/>
-        <element name="AuditEntry" positionX="-63" positionY="0" width="128" height="44"/>
-        <element name="Farm" positionX="-63" positionY="18" width="128" height="44"/>
-        <element name="Item" positionX="-63" positionY="36" width="128" height="44"/>
-        <element name="TeatScore" positionX="-63" positionY="54" width="128" height="44"/>
-    </elements>
+    <entity name="TeatScore" representedClassName="TeatScore" syncable="YES" codeGenerationType="class">
+        <attribute name="cowId" optional="YES" attributeType="String"/>
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="imageKey" optional="YES" attributeType="String"/>
+        <attribute name="notes" optional="YES" attributeType="String"/>
+        <attribute name="score" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="audit" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Audit" inverseName="teatScores" inverseEntity="Audit"/>
+    </entity>
 </model>

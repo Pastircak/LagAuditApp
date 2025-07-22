@@ -3,6 +3,37 @@ import CoreData
 
 // MARK: - Audit Status
 enum AuditStatus: String, CaseIterable {
+    case draft = "draft"
+    case inProgress = "in_progress"
+    case completed = "completed"
+    
+    var displayName: String {
+        switch self {
+        case .draft: return "Draft"
+        case .inProgress: return "In Progress"
+        case .completed: return "Completed"
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .draft: return "doc.text"
+        case .inProgress: return "clock"
+        case .completed: return "checkmark.circle"
+        }
+    }
+    
+    var color: String {
+        switch self {
+        case .draft: return "orange"
+        case .inProgress: return "blue"
+        case .completed: return "green"
+        }
+    }
+}
+
+// MARK: - Parameter Status
+enum ParameterStatus: String, CaseIterable {
     case normal = "Normal"
     case warning = "Warning"
     case critical = "Critical"
@@ -43,10 +74,10 @@ struct AuditData {
 struct AuditEntryData {
     let parameter: String
     let value: String
-    let status: AuditStatus
+    let status: ParameterStatus
     let recommendation: String?
     
-    init(parameter: String, value: String, status: AuditStatus, recommendation: String? = nil) {
+    init(parameter: String, value: String, status: ParameterStatus, recommendation: String? = nil) {
         self.parameter = parameter
         self.value = value
         self.status = status
@@ -109,22 +140,34 @@ struct AuditForm {
 // }
 
 struct FarmInfo: Codable {
-    var dairyName, address, city, state, zip: String
-    var date: Date
-    var preparedBy, contactName, phone, email: String
-    var numberOfCows: Int16
-    var numberOfStalls: Int16
-    var milkingFrequency: Int8
-    var parlorConfig: ParlorType
-    var linerType: LinerType
-    var milkHoseID: HoseSize
+    var dairyName: String = ""
+    var address: String = ""
+    var city: String = ""
+    var state: String = ""
+    var zip: String = ""
+    var date: Date = Date()
+    var preparedBy: String = ""
+    var contactName: String = ""
+    var phone: String = ""
+    var email: String = ""
+    var numberOfCows: Int16 = 0
+    var numberOfStalls: Int16 = 0
+    var milkingFrequency: Int8 = 2
+    var parlorConfig: ParlorType = .parallel
+    var linerType: LinerType = .classic
+    var milkHoseID: HoseSize = .threeQuarters
     var milkProductionLbs: Double?
     var scc: Int32?
-    var systemType: SystemType
-    var milkLineIDs: [String]
+    var systemType: SystemType = .highLine
+    var milkLineIDs: [String] = []
     var milkLineSlope: Double?
     var vacuumPumpHP: Double?
     var hasVFD: Bool?
+    var production: Double?
+    var milkLineHeight: Double?
+    var pumpCapacity: Double?
+    var milkLineLength: Double?
+    var pumpSpeed: Double?
 }
 
 struct MilkingTimeRow: Codable, Identifiable {
@@ -144,7 +187,7 @@ struct DetacherSettings: Codable {
     var blinkTimeDelay: Double?
     var detachFlowSetting: Double?
     var letDownDelay: Double?
-    var notes: String
+    var notes: String = ""
 }
 
 struct PulsatorRow: Codable, Identifiable {
@@ -239,5 +282,29 @@ enum AuditSection: String, CaseIterable, Identifiable {
         case .recommendations: return "Recommendations"
         case .overview: return "Overview"
         }
+    }
+    
+    var label: String {
+        return title
+    }
+    
+    var isFirst: Bool {
+        return self == AuditSection.allCases.first
+    }
+    
+    var isLast: Bool {
+        return self == AuditSection.allCases.last
+    }
+    
+    var prev: AuditSection? {
+        guard let currentIndex = AuditSection.allCases.firstIndex(of: self),
+              currentIndex > 0 else { return nil }
+        return AuditSection.allCases[currentIndex - 1]
+    }
+    
+    var next: AuditSection? {
+        guard let currentIndex = AuditSection.allCases.firstIndex(of: self),
+              currentIndex < AuditSection.allCases.count - 1 else { return nil }
+        return AuditSection.allCases[currentIndex + 1]
     }
 } 

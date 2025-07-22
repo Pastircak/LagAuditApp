@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA221BAE2E2F2F420034FAAE /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA221BAD2E2F2F420034FAAE /* AppRouter.swift */; };
+		FA221BB02E2F2F540034FAAE /* AuditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA221BAF2E2F2F540034FAAE /* AuditViewModel.swift */; };
+		FA221BB72E2F3AC10034FAAE /* AuditShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA221BB52E2F3AC10034FAAE /* AuditShellView.swift */; };
+		FA221BB82E2F3AC10034FAAE /* HomeSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA221BB62E2F3AC10034FAAE /* HomeSidebar.swift */; };
 		FA31D5C82E2C95C5001D8574 /* LagAuditAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5C72E2C95C5001D8574 /* LagAuditAppApp.swift */; };
 		FA31D5CA2E2C95C5001D8574 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5C92E2C95C5001D8574 /* PersistenceController.swift */; };
 		FA31D5CD2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA31D5CB2E2C95C5001D8574 /* LagAuditApp.xcdatamodeld */; };
@@ -39,6 +43,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FA221BAD2E2F2F420034FAAE /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		FA221BAF2E2F2F540034FAAE /* AuditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditViewModel.swift; sourceTree = "<group>"; };
+		FA221BB52E2F3AC10034FAAE /* AuditShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditShellView.swift; sourceTree = "<group>"; };
+		FA221BB62E2F3AC10034FAAE /* HomeSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSidebar.swift; sourceTree = "<group>"; };
 		FA31D5C42E2C95C5001D8574 /* LagAuditApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LagAuditApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA31D5C72E2C95C5001D8574 /* LagAuditAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LagAuditAppApp.swift; sourceTree = "<group>"; };
 		FA31D5C92E2C95C5001D8574 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -125,6 +133,7 @@
 		FA31D5DA2E2C9AD3001D8574 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				FA221BAF2E2F2F540034FAAE /* AuditViewModel.swift */,
 				FA3C94E52E2ED2B900CA386E /* DiagnosticsViewModel.swift */,
 				FA5C62832E2CA90000E524BE /* AuditDataManager.swift */,
 			);
@@ -134,6 +143,8 @@
 		FA31D5DB2E2C9ADF001D8574 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA221BB52E2F3AC10034FAAE /* AuditShellView.swift */,
+				FA221BB62E2F3AC10034FAAE /* HomeSidebar.swift */,
 				FA3C94E12E2EC2FB00CA386E /* DraftsView.swift */,
 				FA3C94E22E2EC2FB00CA386E /* HistoryView.swift */,
 				FA3C94D32E2EC1A700CA386E /* DetachersView.swift */,
@@ -178,6 +189,7 @@
 		FA31D5DE2E2C9AFB001D8574 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FA221BAD2E2F2F420034FAAE /* AppRouter.swift */,
 				FA5C62852E2CA91000E524BE /* AuditGuidelines.swift */,
 				FA5C62892E2CA93000E524BE /* Extensions.swift */,
 				FA5C628E2E2CA96000E524BE /* AuditTypes.swift */,
@@ -275,7 +287,10 @@
 				FA5C62862E2CA91000E524BE /* AuditGuidelines.swift in Sources */,
 				FA5C62882E2CA92000E524BE /* Components.swift in Sources */,
 				FA5C628A2E2CA93000E524BE /* Extensions.swift in Sources */,
+				FA221BB72E2F3AC10034FAAE /* AuditShellView.swift in Sources */,
+				FA221BB82E2F3AC10034FAAE /* HomeSidebar.swift in Sources */,
 				FA5C628F2E2CA96000E524BE /* AuditTypes.swift in Sources */,
+				FA221BB02E2F2F540034FAAE /* AuditViewModel.swift in Sources */,
 				FA3C94DA2E2EC1A700CA386E /* RecommendationsView.swift in Sources */,
 				FA3C94E62E2ED2B900CA386E /* DiagnosticsViewModel.swift in Sources */,
 				FA3C94DB2E2EC1A700CA386E /* FarmInfoView.swift in Sources */,
@@ -287,6 +302,7 @@
 				FA5C628C2E2CA94000E524BE /* FarmSelectionView.swift in Sources */,
 				FA5C628E2E2CA95000E524BE /* AuditSummaryView.swift in Sources */,
 				FA3C94E32E2EC2FB00CA386E /* HistoryView.swift in Sources */,
+				FA221BAE2E2F2F420034FAAE /* AppRouter.swift in Sources */,
 				FA3C94E42E2EC2FB00CA386E /* DraftsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
